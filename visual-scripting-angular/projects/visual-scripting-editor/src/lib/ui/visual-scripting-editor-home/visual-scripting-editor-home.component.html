@@ -1,0 +1,26 @@
+<div class="f-left visual-scripting-edtior-vertical-resizable-sidebar h-100 p-component full-container">
+  <p-menu [model]="menu"></p-menu>
+</div>
+
+<div class="f-left p-component flex-auto" *ngIf="isDefaultPanelActive()">
+  <p-card>
+    <button pButton type="button" label="New Project" icon="pi pi-plus" iconPos="left" class="p-d-block p-mx-auto" (click)="setNewPanelActive()"></button>
+  </p-card>
+  <p-card>
+    <button pButton type="button" label="Open Project" icon="pi pi-plus" iconPos="left" class="p-d-block p-mx-auto" (click)="setOpenPanelActive()"></button>
+  </p-card>
+</div>
+
+<div class="f-left p-component flex-auto" *ngIf="isNewPanelActive()" style="background-color: yellowgreen;">
+  <visual-scripting-editor-files-dialog
+    [validateButtonText]="'Create'">
+  </visual-scripting-editor-files-dialog>
+</div>
+
+<div class="f-left p-component flex-auto" *ngIf="isOpenPanelActive()" style="background-color: aqua;">
+
+</div>
+
+<div class="f-left p-component flex-auto" *ngIf="isOpenRecentPanelActive()" style="background-color: gray;">
+
+</div>

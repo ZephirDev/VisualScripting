@@ -1,0 +1,6 @@
+export enum VisualScriptingEditorHomePanelEnum {
+  DEFAULT = "DEFAULT",
+  NEW_PROJECT = "NEW_PROJECT",
+  OPEN_PROJECT = "OPEN_PROJECT",
+  OPEN_RECENT_PROJECT = "OPEN_RECENT_PROJECT",
+};

@@ -1,0 +1,52 @@
+p-dataView ::ng-deep {
+
+  .p-dataview {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+
+    .p-dataview-header {
+      height: min-content;
+    }
+
+    .p-dataview-content {
+      height: auto;
+      overflow-y: scroll;
+      flex-grow: 1;
+    }
+
+    .p-dataview-footer {
+      height: min-content;
+    }
+  }
+}
+
+.item-list {
+  display: block;
+  padding: 1em;
+  height: min-content;
+}
+
+.overlay {
+  position: relative;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.25);
+  z-index: 10000;
+
+  .icon {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min-content;
+    height: min-content;
+
+    .pi {
+      font-size: 15em;
+    }
+  }
+}

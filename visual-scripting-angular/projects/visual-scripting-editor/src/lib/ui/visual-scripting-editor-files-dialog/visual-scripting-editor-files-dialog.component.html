@@ -1,0 +1,25 @@
+<p-dataView [value]="getFiles()">
+  <ng-template pTemplate="header">
+    <div class="w-100">
+      <p-breadcrumb [model]="getBreadcrumb()" [home]="home"></p-breadcrumb>
+    </div>
+  </ng-template>
+  <ng-template let-file pTemplate="listItem">
+    <div class="item-list"
+          [style.backgroundColor]="file.selected ? '#AAAAAA' : '#FFFFFF'"
+          (click)="file.click()"
+          (dblclick)="file.dblClick()"><span [class]="file.icon"></span> {{file.abstractFile.name}}</div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="align-right">
+      <button pButton type="button" label="Close" icon="pi pi-times" iconPos="left" class="m-r-0_5-em"></button>
+      <button pButton type="button" [label]="validateButtonText" icon="pi pi-check" iconPos="left"></button>
+    </div>
+  </ng-template>
+</p-dataView>
+
+<div class="overlay" *ngIf="isLoading()">
+  <div class="icon">
+    <span class="pi pi-spin pi-spinner"></span>
+  </div>
+</div>
