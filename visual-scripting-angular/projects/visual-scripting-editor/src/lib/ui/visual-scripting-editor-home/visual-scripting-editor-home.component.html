@@ -13,7 +13,10 @@
 
 <div class="f-left p-component flex-auto" *ngIf="isNewPanelActive()" style="background-color: yellowgreen;">
   <visual-scripting-editor-files-dialog
-    [validateButtonText]="'Create'">
+    [validateButtonText]="'Create'"
+    [multiSelect]="false"
+    [canValidate]="canValidateCreateFileSelector.bind(this)"
+    [close]="setDefaultPanelActive.bind(this)">
   </visual-scripting-editor-files-dialog>
 </div>
 

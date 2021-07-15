@@ -12,8 +12,11 @@
   </ng-template>
   <ng-template pTemplate="footer">
     <div class="align-right">
-      <button pButton type="button" label="Close" icon="pi pi-times" iconPos="left" class="m-r-0_5-em"></button>
-      <button pButton type="button" [label]="validateButtonText" icon="pi pi-check" iconPos="left"></button>
+      <button pButton type="button" label="Close" icon="pi pi-times" iconPos="left" class="m-r-0_5-em p-button-danger"
+        (click)="close()"></button>
+      <button pButton type="button" [label]="validateButtonText" icon="pi pi-check" iconPos="left" class="p-button-success"
+        [disabled]="!canValidate(getBreadcrumbFiles(), getSelectedFiles())"
+        (click)="validate(getBreadcrumbFiles(), getSelectedFiles())"></button>
     </div>
   </ng-template>
 </p-dataView>

@@ -5,12 +5,13 @@ import { AbstractFileInterface, FileTypeEnum, DirectoryInterface } from 'visual-
 import { VisualScriptingEditorDriverService } from '../../services/visual-scripting-editor-driver.service';
 import * as KeyCodes from '@angular/cdk/keycodes';
 
-interface VisualScriptingEditorFilesDialogComponentFileType {
+export interface VisualScriptingEditorFilesDialogComponentFileType {
   abstractFile: AbstractFileInterface,
   icon: string,
   selected: boolean,
   dblClick: () => Promise<void>,
   click: () => Promise<void>,
+  index: number,
 }
 
 @Component({
@@ -25,13 +26,23 @@ export class VisualScriptingEditorFilesDialogComponent implements OnInit {
   @Input()
   multiSelect = true;
 
+  @Input()
+  canValidate = (parent: VisualScriptingEditorFilesDialogComponentFileType[], files: VisualScriptingEditorFilesDialogComponentFileType[]) => false;
+
+  @Input()
+  validate = (parent: VisualScriptingEditorFilesDialogComponentFileType[], files: VisualScriptingEditorFilesDialogComponentFileType[]) => {};
+
+  @Input()
+  close = () => {};
+
   private loading = true;
   private breadcrumb: MenuItem[] = [];
   private breadcrumbFiles: VisualScriptingEditorFilesDialogComponentFileType[] = [];
   private files: VisualScriptingEditorFilesDialogComponentFileType[] = [];
+  private selectedFiles: VisualScriptingEditorFilesDialogComponentFileType[] = [];
   private driverSevice: VisualScriptingEditorDriverService;
-  private keys: {[key: string]: boolean} = {};
   private keyboardService: VisualScriptingEditorKeyboardService;
+  private fileIndex: number = 0;
 
   readonly home: MenuItem = {icon: "pi pi-home", command: this.openDirectory.bind(this, [])};
 
@@ -59,6 +70,7 @@ export class VisualScriptingEditorFilesDialogComponent implements OnInit {
     this.buildBreadcrumb();
     let files = await this.driverSevice.getDriver().getStorage().listFilesOf(folders.map(folder => folder.abstractFile));
     this.setFiles(files);
+    this.fileIndex = 0;
     this.loading = false;
   }
 
@@ -79,6 +91,11 @@ export class VisualScriptingEditorFilesDialogComponent implements OnInit {
     return this.breadcrumb;
   }
 
+  getBreadcrumbFiles(): VisualScriptingEditorFilesDialogComponentFileType[]
+  {
+    return this.breadcrumbFiles;
+  }
+
   private setFiles(files: AbstractFileInterface[])
   {
     this.files = this.castToAngularFileType(files, this.breadcrumbFiles);
@@ -91,14 +108,41 @@ export class VisualScriptingEditorFilesDialogComponent implements OnInit {
 
   private async select(file: VisualScriptingEditorFilesDialogComponentFileType): Promise<void>
   {
-    if (!this.multiSelect && !this.keyboardService.isPress(KeyCodes.CONTROL)) {
+    let lastSelected = this.fileIndex;
+    this.fileIndex = file.index;
+
+    let otherwise = async () => {
       for (let item of this.files) {
         item.selected = false;
       }
       file.selected = true;
+    };
+
+    if (this.multiSelect) {
+      if (this.keyboardService.isPress(KeyCodes.CONTROL)) {
+        file.selected = !file.selected;
+      } else if (this.keyboardService.isPress(KeyCodes.SHIFT)) {
+        for (let i = Math.min(lastSelected, file.index); i < Math.max(lastSelected, file.index) + 1; i++) {
+          this.files[i].selected = true;
+        }
+      } else {
+        await otherwise();
+      }
     } else {
-      file.selected = !file.selected;
+      await otherwise();
     }
+
+    this.buildSelectedFiles();
+  }
+
+  private buildSelectedFiles()
+  {
+    this.selectedFiles = this.files.filter(item => item.selected);
+  }
+
+  getSelectedFiles(): VisualScriptingEditorFilesDialogComponentFileType[]
+  {
+    return this.selectedFiles;
   }
 
   isLoading(): boolean
@@ -115,6 +159,7 @@ export class VisualScriptingEditorFilesDialogComponent implements OnInit {
         abstractFile: file,
         icon: FileTypeEnum.DIRECTORY === file.type ? 'pi pi-folder' : 'pi pi-file',
         selected: false,
+        index: i,
         click: () => Promise.resolve(),
         dblClick: () => Promise.resolve(),
       };

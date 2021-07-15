@@ -1,6 +1,8 @@
 import { VisualScriptingEditorHomePanelEnum } from './../../enums/visual-scripting-editor-home-panel.enum';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { VisualScriptingEditorFilesDialogComponentFileType } from '../visual-scripting-editor-files-dialog/visual-scripting-editor-files-dialog.component';
+import { FileTypeEnum } from 'visual-scripting-common';
 
 @Component({
   selector: 'visual-scripting-editor-home',
@@ -65,5 +67,10 @@ export class VisualScriptingEditorHomeComponent implements OnInit {
   setNewPanelActive()
   {
     this.panel = VisualScriptingEditorHomePanelEnum.NEW_PROJECT;
+  }
+
+  canValidateCreateFileSelector(parent: VisualScriptingEditorFilesDialogComponentFileType[], files: VisualScriptingEditorFilesDialogComponentFileType[]): boolean
+  {
+    return files.length === 1 && files[0].abstractFile.type === FileTypeEnum.DIRECTORY;
   }
 }
