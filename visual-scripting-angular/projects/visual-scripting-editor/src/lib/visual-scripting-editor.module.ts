@@ -6,6 +6,8 @@ import { CardModule } from 'primeng/card';
 import { DataViewModule } from 'primeng/dataview';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 // project component
 import { VisualScriptingEditorComponent } from './visual-scripting-editor.component';
@@ -26,10 +28,13 @@ import { VisualScriptingEditorFilesDialogComponent } from './ui/visual-scripting
     DataViewModule,
     BreadcrumbModule,
     TableModule,
+    ToastModule,
   ],
   exports: [
     VisualScriptingEditorComponent,
   ],
-  providers: [],
+  providers: [
+    MessageService
+  ],
 })
 export class VisualScriptingEditorModule { }

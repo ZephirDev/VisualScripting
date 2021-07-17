@@ -4,6 +4,7 @@ export * from './types/error.interface';
 export * from './types/abstract-file.interface';
 export * from './types/directory.interface';
 export * from './types/regular-file.interface';
+export * from './types/project.interface';
 
 export * from './enums/visual-scripting-ipc-channels-method.enum';
 export * from './enums/visual-scripting-ipc-channels.enum';

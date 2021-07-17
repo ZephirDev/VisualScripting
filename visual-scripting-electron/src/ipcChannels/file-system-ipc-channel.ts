@@ -15,7 +15,6 @@ export class FileSystemIpcChannel extends VisualScriptingIpcDecorator {
         this.addHandler<DirectoryInterface[],DirectoryInterface[]>(
             VisualScriptingIpcChannelsMethodEnum.FILE_SYSTEM_LIST,
             this.listFilesOf.bind(this));
-        this.listen();
     }
 
     async getLastOpennedDirectory(): Promise<DirectoryInterface[]>

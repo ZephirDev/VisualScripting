@@ -31,4 +31,8 @@ export const VisualScriptingIpcErrorEnum = {
         code: 500_008,
         what: "The path leads to an unexisting file.",
     },
+    VisualScriptingIpcProjectExists: {
+        code: 500_009,
+        what: "The path leads to an already existing project.",
+    }
 }

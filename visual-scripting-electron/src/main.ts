@@ -4,6 +4,7 @@ const path = require("path");
 
 import {VisualScriptingIpcDecorator} from './common/public-api';
 import { FileSystemIpcChannel } from './ipcChannels/file-system-ipc-channel';
+import { ProjectIpcChannel } from './ipcChannels/project.ipc-channel';
 
 let mainWindow: any;
 
@@ -44,6 +45,7 @@ app.on('activate', function () {
 
 const ipcChannels: VisualScriptingIpcDecorator[] = [
   new FileSystemIpcChannel(ipcMain),
+  new ProjectIpcChannel(ipcMain),
 ];
 for (let ipcChannel of ipcChannels) {
   ipcChannel.listen();

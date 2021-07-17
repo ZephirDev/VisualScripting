@@ -1,8 +1,9 @@
 import { VisualScriptingEditorHomePanelEnum } from './../../enums/visual-scripting-editor-home-panel.enum';
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { VisualScriptingEditorFilesDialogComponentFileType } from '../visual-scripting-editor-files-dialog/visual-scripting-editor-files-dialog.component';
 import { FileTypeEnum } from 'visual-scripting-common';
+import { VisualScriptingEditorDriverService } from '../../services/visual-scripting-editor-driver.service';
 
 @Component({
   selector: 'visual-scripting-editor-home',
@@ -23,8 +24,14 @@ export class VisualScriptingEditorHomeComponent implements OnInit {
   ];
 
   private panel = VisualScriptingEditorHomePanelEnum.DEFAULT;
+  private driverService: VisualScriptingEditorDriverService;
+  private messageService: MessageService;
 
-  constructor() { }
+  constructor(driverService: VisualScriptingEditorDriverService, messageService: MessageService)
+  {
+    this.driverService = driverService;
+    this.messageService = messageService;
+  }
 
   ngOnInit() {
   }
@@ -69,8 +76,20 @@ export class VisualScriptingEditorHomeComponent implements OnInit {
     this.panel = VisualScriptingEditorHomePanelEnum.NEW_PROJECT;
   }
 
-  canValidateCreateFileSelector(parent: VisualScriptingEditorFilesDialogComponentFileType[], files: VisualScriptingEditorFilesDialogComponentFileType[]): boolean
+  canValidateCreateProjectSelector(parent: VisualScriptingEditorFilesDialogComponentFileType[], files: VisualScriptingEditorFilesDialogComponentFileType[]): boolean
   {
     return files.length === 1 && files[0].abstractFile.type === FileTypeEnum.DIRECTORY;
+  }
+
+  createProject(parent: VisualScriptingEditorFilesDialogComponentFileType[], files: VisualScriptingEditorFilesDialogComponentFileType[]): void
+  {
+    this.driverService.getDriver().getProject().create(files[0].abstractFile)
+    .catch(err => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Create project',
+        detail: JSON.stringify(err),
+      });
+    });
   }
 }
