@@ -34,5 +34,9 @@ export const VisualScriptingIpcErrorEnum = {
     VisualScriptingIpcProjectExists: {
         code: 500_009,
         what: "The path leads to an already existing project.",
+    },
+    VisualScriptingIpcNoOpenProject: {
+        code: 500_010,
+        what: "There is no open project.",
     }
 }
