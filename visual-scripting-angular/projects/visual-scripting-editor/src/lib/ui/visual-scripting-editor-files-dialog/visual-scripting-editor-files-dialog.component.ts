@@ -1,5 +1,5 @@
 import { VisualScriptingEditorKeyboardService } from './../../services/visual-scripting-editor-keyboard.service';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractFileInterface, FileTypeEnum, DirectoryInterface } from 'visual-scripting-common';
 import { VisualScriptingEditorDriverService } from '../../services/visual-scripting-editor-driver.service';
@@ -40,26 +40,29 @@ export class VisualScriptingEditorFilesDialogComponent implements OnInit {
   private breadcrumbFiles: VisualScriptingEditorFilesDialogComponentFileType[] = [];
   private files: VisualScriptingEditorFilesDialogComponentFileType[] = [];
   private selectedFiles: VisualScriptingEditorFilesDialogComponentFileType[] = [];
-  private driverSevice: VisualScriptingEditorDriverService;
-  private keyboardService: VisualScriptingEditorKeyboardService;
   private fileIndex: number = 0;
 
   readonly home: MenuItem = {icon: "pi pi-home", command: this.openDirectory.bind(this, [])};
 
-  constructor(driverService: VisualScriptingEditorDriverService, keyboardService: VisualScriptingEditorKeyboardService) {
-    this.driverSevice = driverService;
-    this.keyboardService = keyboardService;
-  }
+  constructor(
+    private driverService: VisualScriptingEditorDriverService,
+    private keyboardService: VisualScriptingEditorKeyboardService,
+    private messageService: MessageService)
+  {}
 
   ngOnInit()
   {
-    this.driverSevice.getDriver().getStorage()
+    this.driverService.getDriver().getStorage()
     .getLastOpennedDirectory()
     .then(files => {
       return this.openDirectory(this.castPathToAngularFileType(files));
     })
     .catch(error => {
-      console.log(error, JSON.stringify(error));
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Open directory',
+        detail: JSON.stringify(error)
+      });
     })
   }
 
@@ -68,7 +71,7 @@ export class VisualScriptingEditorFilesDialogComponent implements OnInit {
     this.loading = true;
     this.breadcrumbFiles = folders;
     this.buildBreadcrumb();
-    let files = await this.driverSevice.getDriver().getStorage().listFilesOf(folders.map(folder => folder.abstractFile));
+    let files = await this.driverService.getDriver().getStorage().listFilesOf(folders.map(folder => folder.abstractFile));
     this.setFiles(files);
     this.fileIndex = 0;
     this.loading = false;

@@ -1,3 +1,5 @@
+import { RegularFileInterface } from './../common/types/regular-file.interface';
+import { ProjectServiceInstance } from './../services/project.service';
 import * as uuid from 'uuid';
 import * as fs from 'fs';
 import {
@@ -12,6 +14,7 @@ import {
     VisualScriptingIpcErrorEnum,
 } from './../common/public-api';
 import { Version } from '../version';
+import { ProjectService } from 'src/services/project.service';
 
 export class ProjectIpcChannel extends VisualScriptingIpcDecorator {
     private project: ProjectInterface|null = null;
@@ -25,45 +28,34 @@ export class ProjectIpcChannel extends VisualScriptingIpcDecorator {
         this.addHandler<void, ProjectInterface>(
             VisualScriptingIpcChannelsMethodEnum.PROJECT_SAVE,
             this.saveProject.bind(this));
+        this.addHandler<RegularFileInterface, ProjectInterface>(
+            VisualScriptingIpcChannelsMethodEnum.PROJECT_LOAD,
+            this.loadProject.bind(this));
+        this.addHandler<void, void>(
+            VisualScriptingIpcChannelsMethodEnum.PROJECT_CLOSE,
+            this.closeProject.bind(this));
+
     }
 
     async createProject(message: MessageInterface<DirectoryInterface>): Promise<ProjectInterface>
     {
-        const directory = message.parameters!.path;
-        if ([directory, `${directory}/project.visual-scripting.json`].reduce((exist, file) => exist && fs.existsSync(file), true)) {
-            throw {
-                raiseBy: VisualScriptingIpcRaiseByEnum.ELECTRON,
-                code: VisualScriptingIpcErrorEnum.VisualScriptingIpcProjectExists.code,
-                what: VisualScriptingIpcErrorEnum.VisualScriptingIpcProjectExists.what,
-            } as ErrorInterface;
-        }
+        await ProjectServiceInstance.createProject(message.parameters!);
+        await ProjectServiceInstance.saveProject();
+        return ProjectServiceInstance.getProject();
+    }
 
-        this.project = {
-            version: Version,
-            folder: message.parameters!,
-            name: "Untitled",
-        };
-
-        return this.saveProject({
-            id: message.id,
-            method: message.method,
-        });
+    async loadProject(message: MessageInterface<RegularFileInterface>): Promise<ProjectInterface>
+    {
+        return ProjectServiceInstance.loadProject(message.parameters!);
     }
 
     async saveProject(message: MessageInterface<void>): Promise<ProjectInterface>
     {
-        if (!this.project) {
-            throw {
-                raiseBy: VisualScriptingIpcRaiseByEnum.ELECTRON,
-                code: VisualScriptingIpcErrorEnum.VisualScriptingIpcNoOpenProject.code,
-                what: VisualScriptingIpcErrorEnum.VisualScriptingIpcNoOpenProject.what,
-            } as ErrorInterface;
-        }
+        return ProjectServiceInstance.saveProject();
+    }
 
-        let projectToSave: ProjectInterface = JSON.parse(JSON.stringify(this.project));
-        delete projectToSave.folder;
-
-        fs.writeFileSync(`${this.project.folder!.path}/project.visual-scripting.json`, JSON.stringify(projectToSave));
-        return this.project;
+    async closeProject(message: MessageInterface<void>): Promise<void>
+    {
+        return ProjectServiceInstance.closeProject();
     }
 }

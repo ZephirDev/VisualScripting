@@ -7,5 +7,7 @@ export enum VisualScriptingIpcChannelsMethodEnum {
     // ###> PROJECT ###
     PROJECT_CREATE = "PROJECT_CREATE",
     PROJECT_SAVE = "PROJECT_SAVE",
+    PROJECT_LOAD = "PROJECT_LOAD",
+    PROJECT_CLOSE = "PROJECT_CLOSE",
     // ###< PROJECT ###
 }

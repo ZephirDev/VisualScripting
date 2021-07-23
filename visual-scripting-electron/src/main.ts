@@ -3,7 +3,7 @@ const url = require("url");
 const path = require("path");
 
 import {VisualScriptingIpcDecorator} from './common/public-api';
-import { FileSystemIpcChannel } from './ipcChannels/file-system-ipc-channel';
+import { FileSystemIpcChannel } from './ipcChannels/file-system.ipc-channel';
 import { ProjectIpcChannel } from './ipcChannels/project.ipc-channel';
 
 let mainWindow: any;

@@ -4,6 +4,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { VisualScriptingEditorFilesDialogComponentFileType } from '../visual-scripting-editor-files-dialog/visual-scripting-editor-files-dialog.component';
 import { FileTypeEnum } from 'visual-scripting-common';
 import { VisualScriptingEditorDriverService } from '../../services/visual-scripting-editor-driver.service';
+import { VisualScriptingEditorUiService } from '../../services/visual-scripting-editor-ui.service';
 
 @Component({
   selector: 'visual-scripting-editor-home',
@@ -24,14 +25,12 @@ export class VisualScriptingEditorHomeComponent implements OnInit {
   ];
 
   private panel = VisualScriptingEditorHomePanelEnum.DEFAULT;
-  private driverService: VisualScriptingEditorDriverService;
-  private messageService: MessageService;
 
-  constructor(driverService: VisualScriptingEditorDriverService, messageService: MessageService)
-  {
-    this.driverService = driverService;
-    this.messageService = messageService;
-  }
+  constructor(
+    private driverService: VisualScriptingEditorDriverService,
+    private messageService: MessageService,
+    private uiService: VisualScriptingEditorUiService)
+  {}
 
   ngOnInit() {
   }
@@ -83,8 +82,10 @@ export class VisualScriptingEditorHomeComponent implements OnInit {
 
   createProject(parent: VisualScriptingEditorFilesDialogComponentFileType[], files: VisualScriptingEditorFilesDialogComponentFileType[]): void
   {
+    this.uiService.setLoading(true);
     this.driverService.getDriver().getProject().create(files[0].abstractFile)
     .catch(err => {
+      this.uiService.setLoading(false);
       this.messageService.add({
         severity: 'error',
         summary: 'Create project',

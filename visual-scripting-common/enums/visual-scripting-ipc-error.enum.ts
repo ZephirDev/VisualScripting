@@ -38,5 +38,9 @@ export const VisualScriptingIpcErrorEnum = {
     VisualScriptingIpcNoOpenProject: {
         code: 500_010,
         what: "There is no open project.",
+    },
+    VisualScriptingIpcFileIsNotProjectFile: {
+        code: 500_011,
+        what: "The given file is not a project file.",
     }
 }

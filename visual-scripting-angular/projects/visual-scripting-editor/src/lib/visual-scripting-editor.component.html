@@ -1,2 +1,8 @@
 <p-toast></p-toast>
 <visual-scripting-editor-home *ngIf="projectReady == false" class="visual-scripting-editor-container"></visual-scripting-editor-home>
+
+<div class="visual-scripting-overlay" *ngIf="uiService.isLoading()">
+  <div class="visual-scripting-icon">
+    <span class="pi pi-spin pi-spinner"></span>
+  </div>
+</div>

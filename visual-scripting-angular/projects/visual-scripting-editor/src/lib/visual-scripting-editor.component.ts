@@ -2,6 +2,7 @@ import { VisualScriptingEditorKeyboardService } from './services/visual-scriptin
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { VisualScriptingEditorDriverInterface } from './interfaces/visual-scripting-editor-driver.interface';
 import { VisualScriptingEditorDriverService } from './services/visual-scripting-editor-driver.service';
+import { VisualScriptingEditorUiService } from './services/visual-scripting-editor-ui.service';
 
 @Component({
   selector: 'visual-scripting-editor',
@@ -15,15 +16,14 @@ export class VisualScriptingEditorComponent implements OnInit {
 
   @Input()
   driver: VisualScriptingEditorDriverInterface|null = null;
-  private driverService: VisualScriptingEditorDriverService;
-  private keyboardService: VisualScriptingEditorKeyboardService;
 
   projectReady: boolean = false;
 
-  constructor(driverService: VisualScriptingEditorDriverService, keyboardService: VisualScriptingEditorKeyboardService) {
-    this.driverService = driverService;
-    this.keyboardService = keyboardService;
-  }
+  constructor(
+    private driverService: VisualScriptingEditorDriverService,
+    private keyboardService: VisualScriptingEditorKeyboardService,
+    public uiService: VisualScriptingEditorUiService)
+  {}
 
   ngOnInit(): void {
     if (this.driver) {
