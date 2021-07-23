@@ -32,6 +32,11 @@
   display: flex;
 }
 
+::ng-deep .d-vertical-flex {
+  display: flex;
+  flex-direction: column;
+}
+
 ::ng-deep .flex-auto {
   flex-grow: 1;
 }
@@ -80,6 +85,10 @@
       font-size: 15em;
     }
   }
+}
+
+::ng-deep .p-0 {
+  padding: 0 !important;
 }
 
 p-toast ::ng-deep .p-toast {

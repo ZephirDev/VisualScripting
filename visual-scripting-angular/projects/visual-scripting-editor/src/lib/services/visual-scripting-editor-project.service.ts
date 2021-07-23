@@ -10,5 +10,24 @@ export class VisualScriptingEditorProjectService {
   constructor()
   {}
 
+  getProject(): ProjectInterface
+  {
+    return this.projectInterface!;
+  }
 
+  async setProject(project: ProjectInterface): Promise<void>
+  {
+    await this.clean();
+    this.projectInterface = project;
+  }
+
+  async clean(): Promise<void>
+  {
+    this.projectInterface = null;
+  }
+
+  hasProject(): boolean
+  {
+    return this.projectInterface != null;
+  }
 }

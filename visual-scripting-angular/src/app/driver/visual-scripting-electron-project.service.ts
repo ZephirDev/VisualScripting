@@ -3,6 +3,7 @@ import * as uuid from 'uuid';
 import {
   DirectoryInterface,
   ProjectInterface,
+  RegularFileInterface,
   VisualScriptingIpcChannelsEnum,
   VisualScriptingIpcChannelsMethodEnum,
   VisualScriptingIpcDecorator,
@@ -21,5 +22,10 @@ export class VisualScriptingElectronProjectService implements VisualScriptingEdi
   create(directory: DirectoryInterface): Promise<ProjectInterface>
   {
     return this.ipcDecorator.send<DirectoryInterface, ProjectInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_CREATE, directory, false);
+  }
+
+  load(file: RegularFileInterface): Promise<ProjectInterface>
+  {
+    return this.ipcDecorator.send<RegularFileInterface, ProjectInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_LOAD, file, false);
   }
 }

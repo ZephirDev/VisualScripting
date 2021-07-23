@@ -1,5 +1,6 @@
-<p-toast></p-toast>
-<visual-scripting-editor-home *ngIf="projectReady == false" class="visual-scripting-editor-container"></visual-scripting-editor-home>
+<p-toast [style]="{width: '90%', 'overflow-y': 'scroll'}"></p-toast>
+<visual-scripting-editor-home *ngIf="!projectService.hasProject()" class="visual-scripting-editor-container"></visual-scripting-editor-home>
+<visual-scripting-editor-project-editor *ngIf="projectService.hasProject()" class="visual-scripting-editor-container"></visual-scripting-editor-project-editor>
 
 <div class="visual-scripting-overlay" *ngIf="uiService.isLoading()">
   <div class="visual-scripting-icon">

@@ -13,18 +13,24 @@
       </p-card>
     </div>
 
-    <div class="f-left p-component flex-auto" *ngIf="isNewPanelActive()" style="background-color: yellowgreen;">
+    <div class="f-left p-component flex-auto" *ngIf="isNewPanelActive()">
       <visual-scripting-editor-files-dialog
         [validateButtonText]="'Create'"
-        [multiSelect]="true"
+        [multiSelect]="false"
         [canValidate]="canValidateCreateProjectSelector.bind(this)"
         [validate]="createProject.bind(this)"
         [close]="setDefaultPanelActive.bind(this)">
       </visual-scripting-editor-files-dialog>
     </div>
 
-    <div class="f-left p-component flex-auto" *ngIf="isOpenPanelActive()" style="background-color: aqua;">
-
+    <div class="f-left p-component flex-auto" *ngIf="isOpenPanelActive()">
+      <visual-scripting-editor-files-dialog
+        [validateButtonText]="'Open'"
+        [multiSelect]="false"
+        [canValidate]="canValidateLoadProjectSelector.bind(this)"
+        [validate]="loadProject.bind(this)"
+        [close]="setDefaultPanelActive.bind(this)">
+      </visual-scripting-editor-files-dialog>
     </div>
 
     <div class="f-left p-component flex-auto" *ngIf="isOpenRecentPanelActive()" style="background-color: gray;">

@@ -144,7 +144,6 @@ export class FileSystemService {
 
     getRegularFileInterfaceOf(path: string): RegularFileInterface|null
     {
-        console.log(path);
         if (fs.existsSync(path)) {
             let stat = fs.statSync(path);
             if (!stat.isDirectory()) {

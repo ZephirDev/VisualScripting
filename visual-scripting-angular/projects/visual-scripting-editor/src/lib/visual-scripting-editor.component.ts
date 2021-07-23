@@ -3,6 +3,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { VisualScriptingEditorDriverInterface } from './interfaces/visual-scripting-editor-driver.interface';
 import { VisualScriptingEditorDriverService } from './services/visual-scripting-editor-driver.service';
 import { VisualScriptingEditorUiService } from './services/visual-scripting-editor-ui.service';
+import { VisualScriptingEditorProjectService } from './services/visual-scripting-editor-project.service';
 
 @Component({
   selector: 'visual-scripting-editor',
@@ -22,6 +23,7 @@ export class VisualScriptingEditorComponent implements OnInit {
   constructor(
     private driverService: VisualScriptingEditorDriverService,
     private keyboardService: VisualScriptingEditorKeyboardService,
+    public projectService: VisualScriptingEditorProjectService,
     public uiService: VisualScriptingEditorUiService)
   {}
 

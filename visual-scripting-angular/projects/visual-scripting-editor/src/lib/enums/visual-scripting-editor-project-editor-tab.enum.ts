@@ -1,0 +1,7 @@
+export enum VisualScriptingEditorProjectEditorTabEnum {
+  NODES_TAB = "NODES_TAB",
+  MODULES_TAB = "MODULES_TAB",
+  LIFELINES_TAB = "LIFELINES_TAB",
+  ACTIONS_TAB = "ACTIONS_TAB",
+  SETTINGS_TAB = "SETTINGS_TAB",
+}

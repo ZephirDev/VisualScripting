@@ -2,9 +2,10 @@ import { VisualScriptingEditorHomePanelEnum } from './../../enums/visual-scripti
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { VisualScriptingEditorFilesDialogComponentFileType } from '../visual-scripting-editor-files-dialog/visual-scripting-editor-files-dialog.component';
-import { FileTypeEnum } from 'visual-scripting-common';
+import { FileTypeEnum, RegularFileInterface } from 'visual-scripting-common';
 import { VisualScriptingEditorDriverService } from '../../services/visual-scripting-editor-driver.service';
 import { VisualScriptingEditorUiService } from '../../services/visual-scripting-editor-ui.service';
+import { VisualScriptingEditorProjectService } from '../../services/visual-scripting-editor-project.service';
 
 @Component({
   selector: 'visual-scripting-editor-home',
@@ -29,7 +30,8 @@ export class VisualScriptingEditorHomeComponent implements OnInit {
   constructor(
     private driverService: VisualScriptingEditorDriverService,
     private messageService: MessageService,
-    private uiService: VisualScriptingEditorUiService)
+    private uiService: VisualScriptingEditorUiService,
+    private projectService: VisualScriptingEditorProjectService)
   {}
 
   ngOnInit() {
@@ -84,11 +86,38 @@ export class VisualScriptingEditorHomeComponent implements OnInit {
   {
     this.uiService.setLoading(true);
     this.driverService.getDriver().getProject().create(files[0].abstractFile)
+    .then(project => {
+      this.uiService.setLoading(false);
+      return this.projectService.setProject(project);
+    })
     .catch(err => {
       this.uiService.setLoading(false);
       this.messageService.add({
         severity: 'error',
         summary: 'Create project',
+        detail: JSON.stringify(err),
+      });
+    });
+  }
+
+  canValidateLoadProjectSelector(parent: VisualScriptingEditorFilesDialogComponentFileType[], files: VisualScriptingEditorFilesDialogComponentFileType[]): boolean
+  {
+    return files.length === 1 && files[0].abstractFile.type === FileTypeEnum.REGULAR_FILE && files[0].abstractFile.name === "project.visual-scripting.json";
+  }
+
+  loadProject(parent: VisualScriptingEditorFilesDialogComponentFileType[], files: VisualScriptingEditorFilesDialogComponentFileType[]): void
+  {
+    this.uiService.setLoading(true);
+    this.driverService.getDriver().getProject().load(files[0].abstractFile as RegularFileInterface)
+    .then(project => {
+      this.uiService.setLoading(false);
+      return this.projectService.setProject(project);
+    })
+    .catch(err => {
+      this.uiService.setLoading(false);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Open project',
         detail: JSON.stringify(err),
       });
     });

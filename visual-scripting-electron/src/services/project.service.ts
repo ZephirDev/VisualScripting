@@ -44,13 +44,13 @@ export class ProjectService {
             await this.closeProject();
         }
         
-        if (file.name !== ProjectService.name || !file.path.endsWith(ProjectService.PROJECT_FILENAME) || !fs.existsSync(file.path)) {
+        if (ProjectService.PROJECT_FILENAME != file.name || !file.path.endsWith(ProjectService.PROJECT_FILENAME) || !fs.existsSync(file.path)) {
             throw {
                 raiseBy: VisualScriptingIpcRaiseByEnum.ELECTRON,
                 code: VisualScriptingIpcErrorEnum.VisualScriptingIpcFileIsNotProjectFile.code,
                 what: VisualScriptingIpcErrorEnum.VisualScriptingIpcFileIsNotProjectFile.what,
                 annotations: {
-                    file
+                    file,
                 },
             } as ErrorInterface;
         }
@@ -73,7 +73,7 @@ export class ProjectService {
         let projectToSave: ProjectInterface = JSON.parse(JSON.stringify(this.project));
         delete projectToSave.folder;
 
-        fs.writeFileSync(`${this.project.folder!.path}/project.visual-scripting.json`, JSON.stringify(projectToSave, null, 4));
+        fs.writeFileSync(`${this.project.folder!.path}/${ProjectService.PROJECT_FILENAME}`, JSON.stringify(projectToSave, null, 4));
         return this.project;
     }
 
