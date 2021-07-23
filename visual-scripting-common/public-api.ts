@@ -16,3 +16,5 @@ export * from './enums/file-type.enum';
 export * from './enums/visual-scripting-ipc-raise-by.enum';
 
 export * from './decorators/visual-scripting-ipc.decorator';
+
+export * from './helpers/array.helpers';

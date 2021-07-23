@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 import {
+    ArrayHelpers,
     DirectoryInterface,
     ErrorInterface,
     FileTypeEnum,
@@ -10,6 +11,11 @@ import {
     VisualScriptingIpcRaiseByEnum,
 } from './../common/public-api';
 import { AbstractFileInterface } from './../common/types/abstract-file.interface';
+
+export interface FileFilterOptions {
+    types?: FileTypeEnum[]|FileTypeEnum,
+    extensions?: string[]|string
+}
 
 export class FileSystemService {
     private lastDirectoryOpenned: DirectoryInterface[] = this.getDefaultDirectories();
@@ -177,6 +183,36 @@ export class FileSystemService {
             }
         }
         return null;
+    }
+
+    filter(files: AbstractFileInterface[], options: FileFilterOptions): AbstractFileInterface[]
+    {
+        options.types = ArrayHelpers.list(options.types);
+        options.extensions = ArrayHelpers.list(options.extensions);
+
+        let result: AbstractFileInterface[] = [];
+        for (let file of files) {
+            if (options.types) {
+                if (!options.types.includes(file.type)) {
+                    continue;
+                }
+            }
+
+            if (options.extensions) {
+                let ext = '';
+                if (file.type == FileTypeEnum.REGULAR_FILE) {
+                    ext = (file as RegularFileInterface).extension;
+                }
+
+                if (!options.extensions.includes(ext)) {
+                    continue;
+                }
+            }
+
+            result.push(file);
+        }
+
+        return result;
     }
 }
 

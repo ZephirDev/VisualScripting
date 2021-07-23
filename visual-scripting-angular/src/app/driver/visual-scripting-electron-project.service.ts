@@ -7,6 +7,7 @@ import {
   VisualScriptingIpcChannelsEnum,
   VisualScriptingIpcChannelsMethodEnum,
   VisualScriptingIpcDecorator,
+  AbstractFileInterface,
 } from 'visual-scripting-common';
 import { VisualScriptingEditorProjectInterface } from 'visual-scripting-editor';
 
@@ -27,5 +28,10 @@ export class VisualScriptingElectronProjectService implements VisualScriptingEdi
   load(file: RegularFileInterface): Promise<ProjectInterface>
   {
     return this.ipcDecorator.send<RegularFileInterface, ProjectInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_LOAD, file, false);
+  }
+
+  listNodesOf(directories: DirectoryInterface[]): Promise<AbstractFileInterface[]>
+  {
+    return this.ipcDecorator.send<DirectoryInterface[], AbstractFileInterface[]>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_LIST_OF, directories, false);
   }
 }

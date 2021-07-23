@@ -1,20 +1,16 @@
-import { RegularFileInterface } from './../common/types/regular-file.interface';
-import { ProjectServiceInstance } from './../services/project.service';
 import * as uuid from 'uuid';
-import * as fs from 'fs';
+
 import {
     DirectoryInterface,
+    MessageInterface,
+    ProjectInterface,
     VisualScriptingIpcChannelsEnum,
     VisualScriptingIpcChannelsMethodEnum,
     VisualScriptingIpcDecorator,
-    ProjectInterface,
-    MessageInterface,
-    ErrorInterface,
-    VisualScriptingIpcRaiseByEnum,
-    VisualScriptingIpcErrorEnum,
 } from './../common/public-api';
-import { Version } from '../version';
-import { ProjectService } from 'src/services/project.service';
+import { AbstractFileInterface } from './../common/types/abstract-file.interface';
+import { RegularFileInterface } from './../common/types/regular-file.interface';
+import { ProjectServiceInstance } from './../services/project.service';
 
 export class ProjectIpcChannel extends VisualScriptingIpcDecorator {
     private project: ProjectInterface|null = null;
@@ -34,7 +30,9 @@ export class ProjectIpcChannel extends VisualScriptingIpcDecorator {
         this.addHandler<void, void>(
             VisualScriptingIpcChannelsMethodEnum.PROJECT_CLOSE,
             this.closeProject.bind(this));
-
+        this.addHandler<DirectoryInterface[], AbstractFileInterface[]>(
+            VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_LIST_OF,
+            this.listNodesOf.bind(this));
     }
 
     async createProject(message: MessageInterface<DirectoryInterface>): Promise<ProjectInterface>
@@ -57,5 +55,10 @@ export class ProjectIpcChannel extends VisualScriptingIpcDecorator {
     async closeProject(message: MessageInterface<void>): Promise<void>
     {
         return ProjectServiceInstance.closeProject();
+    }
+
+    async listNodesOf(message: MessageInterface<DirectoryInterface[]>): Promise<AbstractFileInterface[]>
+    {
+        return ProjectServiceInstance.listNodesOf(message.parameters!);
     }
 }

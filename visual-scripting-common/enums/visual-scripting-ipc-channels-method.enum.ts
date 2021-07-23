@@ -9,5 +9,10 @@ export enum VisualScriptingIpcChannelsMethodEnum {
     PROJECT_SAVE = "PROJECT_SAVE",
     PROJECT_LOAD = "PROJECT_LOAD",
     PROJECT_CLOSE = "PROJECT_CLOSE",
+    PROJECT_NODES_LIST_OF = "PROJECT_NODES_LIST_OF",
     // ###< PROJECT ###
+
+    // ###> NODES ###
+
+    // ###< NODES ###
 }

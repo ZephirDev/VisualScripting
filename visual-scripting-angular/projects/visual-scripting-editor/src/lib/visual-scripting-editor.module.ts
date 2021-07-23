@@ -15,6 +15,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
+import { TagModule } from 'primeng/tag';
+import { TreeModule } from 'primeng/tree';
 
 import { MessageService } from 'primeng/api';
 
@@ -23,6 +25,7 @@ import { VisualScriptingEditorComponent } from './visual-scripting-editor.compon
 import { VisualScriptingEditorHomeComponent } from './ui/visual-scripting-editor-home/visual-scripting-editor-home.component';
 import { VisualScriptingEditorFilesDialogComponent } from './ui/visual-scripting-editor-files-dialog/visual-scripting-editor-files-dialog.component';
 import { VisualScriptingEditorProjectEditorComponent } from './ui/visual-scripting-editor-project-editor/visual-scripting-editor-project-editor.component';
+import { VisualScriptingEditorProjectEditorNodeTabComponent } from './ui/visual-scripting-editor-project-editor-node-tab/visual-scripting-editor-project-editor-node-tab.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { VisualScriptingEditorProjectEditorComponent } from './ui/visual-scripti
     VisualScriptingEditorHomeComponent,
     VisualScriptingEditorFilesDialogComponent,
     VisualScriptingEditorProjectEditorComponent,
+    VisualScriptingEditorProjectEditorNodeTabComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,8 @@ import { VisualScriptingEditorProjectEditorComponent } from './ui/visual-scripti
     InputTextModule,
     InputNumberModule,
     CheckboxModule,
+    TagModule,
+    TreeModule,
   ],
   exports: [
     VisualScriptingEditorComponent,

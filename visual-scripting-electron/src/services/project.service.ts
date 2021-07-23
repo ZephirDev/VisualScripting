@@ -2,8 +2,10 @@ import * as fs from 'fs';
 
 import { Version } from '../version';
 import {
+    AbstractFileInterface,
     DirectoryInterface,
     ErrorInterface,
+    FileTypeEnum,
     ProjectInterface,
     RegularFileInterface,
     VisualScriptingIpcErrorEnum,
@@ -80,6 +82,28 @@ export class ProjectService {
     async closeProject(): Promise<void>
     {
         this.project = null;
+    }
+
+    getNodesFolder(): DirectoryInterface|null
+    {
+        return FileSystemServiceInstance.getDirectoryInterfaceOf(`${this.project!.folder!.path}/nodes`);
+    }
+    
+    async listNodesOf(directories: DirectoryInterface[]): Promise<AbstractFileInterface[]>
+    {
+        let nodeFolder = this.getNodesFolder();
+        if (!nodeFolder) {
+            return [];
+        }
+
+        let files = await FileSystemServiceInstance.listFilesOf([nodeFolder].concat(directories));
+        return FileSystemServiceInstance.filter(files, {
+            types: FileTypeEnum.DIRECTORY,
+        }).concat(
+            FileSystemServiceInstance.filter(files, {
+                extensions: 'node'
+            })
+        );
     }
 
     getProject(): ProjectInterface

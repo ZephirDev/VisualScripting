@@ -13,7 +13,7 @@
   width: 100%;
 }
 
-::ng-deep .sidebar-container * div {
+::ng-deep .sidebar-container p-menu div {
   width: 100%;
   height: 100%;
 }
@@ -89,6 +89,10 @@
 
 ::ng-deep .p-0 {
   padding: 0 !important;
+}
+
+::ng-deep .m-l-0_2-em {
+  margin-left: 0.2em;
 }
 
 p-toast ::ng-deep .p-toast {

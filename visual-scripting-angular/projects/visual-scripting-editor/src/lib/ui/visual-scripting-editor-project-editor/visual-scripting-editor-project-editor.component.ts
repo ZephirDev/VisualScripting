@@ -43,6 +43,7 @@ export class VisualScriptingEditorProjectEditorComponent implements OnInit {
   {
     const project = this.projectService.getProject();
     this.project.label = project.name;
+    this.projectSettings.splice(0, this.projectSettings.length);
     this.projectSettings.push({
       name: "project.version",
       readonly: true,

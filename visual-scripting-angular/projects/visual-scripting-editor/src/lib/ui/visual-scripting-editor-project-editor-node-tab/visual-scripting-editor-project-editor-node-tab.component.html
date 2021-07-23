@@ -1,0 +1,22 @@
+<div class="visual-scripting-editor-flex-container">
+  <div class="f-left visual-scripting-edtior-vertical-resizable-sidebar h-100 sidebar-container p-component">
+    <div class="d-vertical-flex h-100">
+      <div>
+        <p-toolbar styleClass="p-0">
+          <div class="p-toolbar-group-left flex-auto">
+            <p-tag value="Nodes" class="m-l-0_2-em"></p-tag>
+          </div>
+
+          <div class="p-toolbar-group-right">
+              <p-button icon="pi pi-folder" styleClass="toolbar-button-margin"></p-button>
+              <p-button icon="pi pi-plus" styleClass="toolbar-button-margin"></p-button>
+          </div>
+        </p-toolbar>
+      </div>
+
+      <div class="flex-auto p-component">
+        <p-tree [value]="files" styleClass="h-100 p-0"></p-tree>
+      </div>
+    </div>
+  </div>
+</div>

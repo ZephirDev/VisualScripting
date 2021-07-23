@@ -12,11 +12,14 @@
 
   <div class="flex-auto">
 
-    <div *ngIf="isNodesTab()" class="full-container" style="background-color: aqua;"></div>
+    <div *ngIf="isNodesTab()" class="full-container" style="background-color: aqua;">
+      <visual-scripting-editor-project-editor-node-tab></visual-scripting-editor-project-editor-node-tab>
+    </div>
+
     <div *ngIf="isModulesTab()" class="full-container" style="background-color: rebeccapurple;"></div>
     <div *ngIf="isLifelinesTab()" class="full-container" style="background-color: burlywood;"></div>
     <div *ngIf="isActionsTab()" class="full-container" style="background-color: yellowgreen;"></div>
-    <div *ngIf="isSettingsTab()" class="full-container scroll-y" style="background-color: palevioletred;">
+    <div *ngIf="isSettingsTab()" class="full-container scroll-y">
       <p-accordion>
         <p-accordionTab *ngFor="let option of options" [header]="option.section">
           <p-table [value]="option.settings">
