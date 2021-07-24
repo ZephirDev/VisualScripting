@@ -1,0 +1,12 @@
+<p-card styleClass="p-0">
+  <ng-template pTemplate="header" *ngIf="header != null">
+      {{header}}
+  </ng-template>
+  <span *ngIf="message != null">{{message}}: </span><input type="text" pInputText [(ngModel)]="value">
+  <ng-template pTemplate="footer">
+    <div class="align-right">
+      <p-button (onClick)="close(null)" icon="pi pi-check" [label]="closeLabel" styleClass="toolbar-button-margin p-button-danger"></p-button>
+      <p-button (onClick)="close(value)" icon="pi pi-check" [disabled]="value.length == 0 || !canValidate(value)" [label]="validateLabel" styleClass="toolbar-button-margin"></p-button>
+    </div>
+  </ng-template>
+</p-card>

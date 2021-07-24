@@ -8,14 +8,17 @@
           </div>
 
           <div class="p-toolbar-group-right">
-              <p-button icon="pi pi-folder" styleClass="toolbar-button-margin"></p-button>
+              <p-button icon="pi pi-folder" styleClass="toolbar-button-margin" (onClick)="this.openNewDirectoryPopup(selectedFile)"></p-button>
               <p-button icon="pi pi-plus" styleClass="toolbar-button-margin"></p-button>
           </div>
         </p-toolbar>
       </div>
 
       <div class="flex-auto p-component">
-        <p-tree [value]="files" styleClass="h-100 p-0"></p-tree>
+        <p-tree [value]="files" styleClass="h-100 p-0"
+          selectionMode="single"
+          [(selection)]="selectedFile"
+          (onNodeSelect)="onFileSelect($event)"></p-tree>
       </div>
     </div>
   </div>

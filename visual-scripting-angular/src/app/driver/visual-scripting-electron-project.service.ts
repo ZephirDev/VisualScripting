@@ -8,6 +8,7 @@ import {
   VisualScriptingIpcChannelsMethodEnum,
   VisualScriptingIpcDecorator,
   AbstractFileInterface,
+  CreateDirectoryInterface,
 } from 'visual-scripting-common';
 import { VisualScriptingEditorProjectInterface } from 'visual-scripting-editor';
 
@@ -33,5 +34,13 @@ export class VisualScriptingElectronProjectService implements VisualScriptingEdi
   listNodesOf(directories: DirectoryInterface[]): Promise<AbstractFileInterface[]>
   {
     return this.ipcDecorator.send<DirectoryInterface[], AbstractFileInterface[]>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_LIST_OF, directories, false);
+  }
+
+  createNodesDirectoryOf(directories: DirectoryInterface[], name: string): Promise<DirectoryInterface>
+  {
+    return this.ipcDecorator.send<CreateDirectoryInterface, DirectoryInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_CREATE_DIRECTORY, {
+      directories,
+      name,
+    }, false);
   }
 }

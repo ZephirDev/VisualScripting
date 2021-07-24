@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import { Version } from '../version';
 import {
     AbstractFileInterface,
+    CreateDirectoryInterface,
     DirectoryInterface,
     ErrorInterface,
     FileTypeEnum,
@@ -84,6 +85,15 @@ export class ProjectService {
         this.project = null;
     }
 
+    createNodesFolder()
+    {
+        if (!fs.existsSync(`${this.project!.folder!.path}/nodes`)) {
+            fs.mkdirSync(`${this.project!.folder!.path}/nodes`, {
+                recursive: true,
+            });
+        }
+    }
+
     getNodesFolder(): DirectoryInterface|null
     {
         return FileSystemServiceInstance.getDirectoryInterfaceOf(`${this.project!.folder!.path}/nodes`);
@@ -104,6 +114,12 @@ export class ProjectService {
                 extensions: 'node'
             })
         );
+    }
+
+    async createNodesDirectory(createDirectory: CreateDirectoryInterface): Promise<DirectoryInterface>
+    {
+        this.createNodesFolder();
+        return FileSystemServiceInstance.mkdir([this.getNodesFolder()!].concat(createDirectory.directories), createDirectory.name);
     }
 
     getProject(): ProjectInterface

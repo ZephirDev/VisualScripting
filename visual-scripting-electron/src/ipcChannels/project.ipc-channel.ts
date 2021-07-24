@@ -1,3 +1,4 @@
+import { CreateDirectoryInterface } from './../common/types/create-direotry.interface';
 import * as uuid from 'uuid';
 
 import {
@@ -33,6 +34,9 @@ export class ProjectIpcChannel extends VisualScriptingIpcDecorator {
         this.addHandler<DirectoryInterface[], AbstractFileInterface[]>(
             VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_LIST_OF,
             this.listNodesOf.bind(this));
+        this.addHandler<CreateDirectoryInterface, DirectoryInterface>(
+            VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_CREATE_DIRECTORY,
+            this.createNodesDirectory.bind(this));
     }
 
     async createProject(message: MessageInterface<DirectoryInterface>): Promise<ProjectInterface>
@@ -60,5 +64,10 @@ export class ProjectIpcChannel extends VisualScriptingIpcDecorator {
     async listNodesOf(message: MessageInterface<DirectoryInterface[]>): Promise<AbstractFileInterface[]>
     {
         return ProjectServiceInstance.listNodesOf(message.parameters!);
+    }
+
+    async createNodesDirectory(message: MessageInterface<CreateDirectoryInterface>): Promise<DirectoryInterface>
+    {
+        return ProjectServiceInstance.createNodesDirectory(message.parameters!);
     }
 }

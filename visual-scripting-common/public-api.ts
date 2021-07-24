@@ -8,6 +8,7 @@ export * from './types/project.interface';
 export * from './types/type-name';
 export * from './types/setting.interface';
 export * from './types/settings.interface';
+export * from './types/create-direotry.interface';
 
 export * from './enums/visual-scripting-ipc-channels-method.enum';
 export * from './enums/visual-scripting-ipc-channels.enum';

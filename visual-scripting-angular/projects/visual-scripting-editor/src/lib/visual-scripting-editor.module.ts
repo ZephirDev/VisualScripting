@@ -17,7 +17,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TagModule } from 'primeng/tag';
 import { TreeModule } from 'primeng/tree';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
+import { DialogService } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 
 // project component
@@ -26,6 +28,7 @@ import { VisualScriptingEditorHomeComponent } from './ui/visual-scripting-editor
 import { VisualScriptingEditorFilesDialogComponent } from './ui/visual-scripting-editor-files-dialog/visual-scripting-editor-files-dialog.component';
 import { VisualScriptingEditorProjectEditorComponent } from './ui/visual-scripting-editor-project-editor/visual-scripting-editor-project-editor.component';
 import { VisualScriptingEditorProjectEditorNodeTabComponent } from './ui/visual-scripting-editor-project-editor-node-tab/visual-scripting-editor-project-editor-node-tab.component';
+import { VisualScriptingEditorDialogInputTextComponent } from './ui/visual-scripting-editor-dialog-input-text/visual-scripting-editor-dialog-input-text.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,7 @@ import { VisualScriptingEditorProjectEditorNodeTabComponent } from './ui/visual-
     VisualScriptingEditorFilesDialogComponent,
     VisualScriptingEditorProjectEditorComponent,
     VisualScriptingEditorProjectEditorNodeTabComponent,
+    VisualScriptingEditorDialogInputTextComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,12 +58,14 @@ import { VisualScriptingEditorProjectEditorNodeTabComponent } from './ui/visual-
     CheckboxModule,
     TagModule,
     TreeModule,
+    DynamicDialogModule,
   ],
   exports: [
     VisualScriptingEditorComponent,
   ],
   providers: [
-    MessageService
+    MessageService,
+    DialogService,
   ],
 })
 export class VisualScriptingEditorModule { }

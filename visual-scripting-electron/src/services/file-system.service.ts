@@ -90,6 +90,35 @@ export class FileSystemService {
         return childrenFiles;
     }
 
+    async mkdir(directories: DirectoryInterface[], name: string): Promise<DirectoryInterface>
+    {
+        let path = '/';
+        if (directories.length > 0) {
+            path = directories[0].dirname!;
+        }
+
+        for (let directory of directories) {
+            if (path == '/') {
+                path += directory.name;
+            } else {
+                path += '/' + directory.name;
+            }
+        }
+
+        if (!path.endsWith('/')) {
+            path += '/' + name;
+        } else {
+            path += name;
+        }
+
+        if (!fs.existsSync(path)) {
+            fs.mkdirSync(path, {
+                recursive: true,
+            });
+        }
+        return this.getDirectoryInterfaceOf(path)!;
+    }
+
     getDefaultDirectories(): DirectoryInterface[]
     {
         let home = process.env.HOME!.split(/\/+/);
