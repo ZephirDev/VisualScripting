@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-import { Version } from '../version';
+import {Version} from '../version';
 import {
     AbstractFileInterface,
     CreateDirectoryInterface,
@@ -12,7 +12,9 @@ import {
     VisualScriptingIpcErrorEnum,
     VisualScriptingIpcRaiseByEnum,
 } from './../common/public-api';
-import { FileSystemServiceInstance } from './file-system.service';
+import {FileSystemService, FileSystemServiceInstance} from './file-system.service';
+import {CreateNodeInterface} from "../../../visual-scripting-common/types/create-node.interface";
+import {NodeInterface} from "../common/types/node.interface";
 
 export class ProjectService {
     private static readonly PROJECT_FILENAME = 'project.visual-scripting.json';
@@ -120,6 +122,38 @@ export class ProjectService {
     {
         this.createNodesFolder();
         return FileSystemServiceInstance.mkdir([this.getNodesFolder()!].concat(createDirectory.directories), createDirectory.name);
+    }
+
+    async createNode(createNode: CreateNodeInterface): Promise<NodeInterface>
+    {
+        this.createNodesFolder();
+        let folders = [this.getNodesFolder()!, ...createNode.parents];
+        let parent = await FileSystemServiceInstance.mkdir(folders.slice(0, folders.length - 1), folders[folders.length - 1]);
+        let path = parent.path + '/' + createNode.name + '.node';
+
+        if (fs.existsSync(path)) {
+            throw {
+                raiseBy: VisualScriptingIpcRaiseByEnum.ELECTRON,
+                code: VisualScriptingIpcErrorEnum.VisualScriptingIpcFileExists.code,
+                what: VisualScriptingIpcErrorEnum.VisualScriptingIpcFileExists.what,
+                annotations: {
+                    parent,
+                    path,
+                }
+            } as ErrorInterface;
+        }
+
+        let nodeInterface: NodeInterface = {
+            version: Version,
+            namespace: createNode.parents.reduce<string>((aggregator, item) => {
+                return aggregator + "::" + item.name;
+            }, ""),
+            name: createNode.name,
+        }
+
+        fs.writeFileSync(path, JSON.stringify(nodeInterface, null, 4));
+        nodeInterface.file = FileSystemServiceInstance.getRegularFileInterfaceOf(path)!;
+        return nodeInterface;
     }
 
     getProject(): ProjectInterface

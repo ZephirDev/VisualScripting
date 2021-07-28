@@ -28,6 +28,10 @@
       "visual-scripting-editor": [
         "dist/visual-scripting-editor/visual-scripting-editor",
         "dist/visual-scripting-editor"
+      ],
+      "visul-scripting-opentracing": [
+        "dist/visul-scripting-opentracing/visul-scripting-opentracing",
+        "dist/visul-scripting-opentracing"
       ]
     }
   },

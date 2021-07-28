@@ -42,5 +42,9 @@ export const VisualScriptingIpcErrorEnum = {
     VisualScriptingIpcFileIsNotProjectFile: {
         code: 500_011,
         what: "The given file is not a project file.",
-    }
+    },
+    VisualScriptingIpcFileExists: {
+        code: 500_012,
+        what: "The file already exist.",
+    },
 }

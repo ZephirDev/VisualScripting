@@ -90,8 +90,12 @@ export class FileSystemService {
         return childrenFiles;
     }
 
-    async mkdir(directories: DirectoryInterface[], name: string): Promise<DirectoryInterface>
+    async mkdir(directories: DirectoryInterface[], name: string|DirectoryInterface): Promise<DirectoryInterface>
     {
+        if (typeof name === 'object') {
+            name = name.name;
+        }
+
         let path = '/';
         if (directories.length > 0) {
             path = directories[0].dirname!;
