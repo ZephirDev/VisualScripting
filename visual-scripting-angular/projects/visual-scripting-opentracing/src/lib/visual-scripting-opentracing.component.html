@@ -1,4 +1,29 @@
-<div class="visual-scripting-opentracing">
-  
+<p-dialog [visible]="isToolbarDisplayed()" [closable]="false" class="no-header-p-dialog-flex">
+  <ng-template pTemplate="header">
+    <p-toolbar>
+      <div class="p-toolbar-group-left">
+        <h2 class="m-0">Opentracing toolbox</h2>
+      </div>
+      <div class="p-toolbar-group-right">
+        <p-button (onClick)="setToolbarDisplay(false)" icon="pi pi-times" styleClass="p-button-danger"></p-button>
+      </div>
+    </p-toolbar>
+  </ng-template>
+  <p-accordion>
+    <p-accordionTab header="Opentracing">
+      <table class="w-100">
+        <tr>
+          <td><h2>Timer:</h2></td>
+          <td><h2>{{getTimerValue()}}</h2></td>
+          <td rowspan="2" class="text-align-center"><p-button (onClick)="isRecording() ? stopRecord() : startRecord()" [icon]="isRecording() ? 'pi pi-pause' : 'pi pi-play'" [styleClass]="isRecording() ? 'p-button-danger' : 'p-button-success'"></p-button></td>
+        </tr>
+        <tr>
+          <td><h2>X-Tracing-Id:</h2></td>
+          <td>my-id</td>
+        </tr>
+      </table>
+    </p-accordionTab>
+  </p-accordion>
+</p-dialog>
 
-</div>
+<p-button styleClass="visual-scripting-opentracing-toolbar" *ngIf="!isToolbarDisplayed()" icon="pi pi-angle-up" (onClick)="setToolbarDisplay(true)" label="Toolbar"></p-button>
