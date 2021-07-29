@@ -16,5 +16,5 @@ echo "###< angular/build/copy ###"
 echo "###> electron/build ###"
 pwd
 $PROJECT_DIR/visual-scripting-electron/node_modules/.bin/tsc
-cp package.json ./dist/visual-scripting-electron/
+cp package.json ./dist/visual-scripting-electron/src/
 echo "###< electron/build ###"

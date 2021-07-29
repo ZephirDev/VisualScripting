@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/visul-scripting-opentracing",
+  "dest": "../../dist/visual-scripting-opentracing",
   "lib": {
     "entryFile": "src/public-api.ts"
   }

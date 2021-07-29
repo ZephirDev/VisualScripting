@@ -1,17 +1,17 @@
-import {ZipkinOptionsInterface} from "../types/zipkin-options.interface";
-
-import {Tracer, BatchRecorder, jsonEncoder} from 'zipkin';
 import {ZipkinClient} from "../clients/zipkin.client";
+import {OpentracingTracerDecoratorInterface} from "./opentracing-tracer-decorator.interface";
 
 export class ZipkinTracerDecorator {
-    tracer: Tracer;
+    tracer: OpentracingTracerDecoratorInterface;
     client: ZipkinClient;
 
     constructor(client: ZipkinClient, name: string)
     {
         this.client = client;
-        this.tracer =
+        this.tracer = client.newTracer(name);
     }
+
+
 
 
 }

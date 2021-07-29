@@ -11,10 +11,14 @@
   "dependencies": {
     "@types/node": "^16.0.1",
     "electron": "^13.1.6",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zipkin": "^0.22.0",
+    "zipkin-context-cls": "^0.22.0",
+    "zipkin-transport-http": "^0.22.0"
   },
   "devDependencies": {
     "@types/uuid": "^8.3.1",
+    "@types/zipkin-context-cls": "^0.11.2",
     "typescript": "^4.3.5"
   }
 }

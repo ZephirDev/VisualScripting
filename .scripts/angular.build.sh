@@ -7,6 +7,7 @@ echo "###> angular/build ###"
 
 cd "$PROJECT_DIR/visual-scripting-angular"
 ng build visual-scripting-common
+ng build visual-scripting-opentracing
 ng build visual-scripting-editor
 ng build --base-href="./"
 

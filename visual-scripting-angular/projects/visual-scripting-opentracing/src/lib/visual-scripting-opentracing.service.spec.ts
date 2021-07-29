@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { VisulScriptingOpentracingService } from './visul-scripting-opentracing.service';
+import { VisualScriptingOpentracingService } from './visual-scripting-opentracing.service';
 
 describe('VisulScriptingOpentracingService', () => {
-  let service: VisulScriptingOpentracingService;
+  let service: VisualScriptingOpentracingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(VisulScriptingOpentracingService);
+    service = TestBed.inject(VisualScriptingOpentracingService);
   });
 
   it('should be created', () => {

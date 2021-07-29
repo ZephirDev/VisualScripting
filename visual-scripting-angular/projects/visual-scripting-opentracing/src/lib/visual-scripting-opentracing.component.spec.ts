@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VisulScriptingOpentracingComponent } from './visul-scripting-opentracing.component';
+import { VisualScriptingOpentracingComponent } from './visual-scripting-opentracing.component';
 
 describe('VisulScriptingOpentracingComponent', () => {
-  let component: VisulScriptingOpentracingComponent;
-  let fixture: ComponentFixture<VisulScriptingOpentracingComponent>;
+  let component: VisualScriptingOpentracingComponent;
+  let fixture: ComponentFixture<VisualScriptingOpentracingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VisulScriptingOpentracingComponent ]
+      declarations: [ VisualScriptingOpentracingComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VisulScriptingOpentracingComponent);
+    fixture = TestBed.createComponent(VisualScriptingOpentracingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

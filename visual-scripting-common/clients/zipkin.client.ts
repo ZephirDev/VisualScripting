@@ -2,8 +2,10 @@ import {OpentracingClientInterface} from "./opentracing-client.interface";
 import {ZipkinOptionsInterface} from "../types/zipkin-options.interface";
 
 import {Tracer, BatchRecorder, jsonEncoder} from 'zipkin';
-import {ZipkinClient} from "../clients/zipkin.client";
+const  ZipkinCLSContext = require('zipkin-context-cls');
+import {HttpLogger} from 'zipkin-transport-http';
 import {ZipkinTracerDecorator} from "../decorators/zipkin-tracer.decorator";
+import {OpentracingTracerDecoratorInterface} from "../decorators/opentracing-tracer-decorator.interface";
 
 export class ZipkinClient implements OpentracingClientInterface {
     private options: ZipkinOptionsInterface;
@@ -16,7 +18,7 @@ export class ZipkinClient implements OpentracingClientInterface {
     createZipkinTracer(name: string): Tracer
     {
         return new Tracer({
-            ctxImpl: new CLSContext('zipkin'),
+            ctxImpl: new ZipkinCLSContext.CLSContext('zipkin'),
             recorder: new BatchRecorder({
                 logger: new HttpLogger({
                     endpoint: `${this.options.scheme}://${this.options.host}:${this.options.port}/${this.options.path || '/api/v2/spans'}`,
@@ -29,6 +31,6 @@ export class ZipkinClient implements OpentracingClientInterface {
 
     newTracer(serviceName: string): OpentracingTracerDecoratorInterface
     {
-        return new ZipkinTracerDecorator(this, name);
+        return new ZipkinTracerDecorator(this, serviceName);
     }
 }

@@ -171,23 +171,23 @@
         }
       }
     },
-    "visul-scripting-opentracing": {
+    "visual-scripting-opentracing": {
       "projectType": "library",
-      "root": "projects/visul-scripting-opentracing",
-      "sourceRoot": "projects/visul-scripting-opentracing/src",
+      "root": "projects/visual-scripting-opentracing",
+      "sourceRoot": "projects/visual-scripting-opentracing/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/visul-scripting-opentracing/ng-package.json"
+            "project": "projects/visual-scripting-opentracing/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/visul-scripting-opentracing/tsconfig.lib.prod.json"
+              "tsConfig": "projects/visual-scripting-opentracing/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/visul-scripting-opentracing/tsconfig.lib.json"
+              "tsConfig": "projects/visual-scripting-opentracing/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -195,9 +195,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/visul-scripting-opentracing/src/test.ts",
-            "tsConfig": "projects/visul-scripting-opentracing/tsconfig.spec.json",
-            "karmaConfig": "projects/visul-scripting-opentracing/karma.conf.js"
+            "main": "projects/visual-scripting-opentracing/src/test.ts",
+            "tsConfig": "projects/visual-scripting-opentracing/tsconfig.spec.json",
+            "karmaConfig": "projects/visual-scripting-opentracing/karma.conf.js"
           }
         }
       }
