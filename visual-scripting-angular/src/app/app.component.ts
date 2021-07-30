@@ -18,7 +18,7 @@ export class AppComponent {
     private opentracingService: VisualScriptingOpentracingService,
   )
   {
-    this.driver = new VisualScriptingElectrongDriverService(electronService);
+    this.driver = new VisualScriptingElectrongDriverService(electronService, opentracingService);
   }
 
   ngOnInit(): void {

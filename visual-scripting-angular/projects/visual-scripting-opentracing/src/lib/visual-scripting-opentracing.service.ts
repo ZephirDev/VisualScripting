@@ -30,6 +30,7 @@ export class VisualScriptingOpentracingService {
   {
     this.tracer = this.opentracingHelpers.newClient(options).newTracer(name);
     this.rootSpan = this.tracer.createSpan(null, "root");
+    this.rootSpan.finish();
   }
 
   deleteTracer(): void

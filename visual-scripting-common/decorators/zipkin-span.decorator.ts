@@ -47,6 +47,8 @@ export class ZipkinSpanDecorator implements OpentracingSpanDecoratorInterface {
 
     finish(): void
     {
+        this.span.duration = Date.now() * 1000 - this.span.timestamp;
+        if (this.span.duration <= 0) this.span.duration = 1;
         this.tracer.record([this.span]);
     }
 
