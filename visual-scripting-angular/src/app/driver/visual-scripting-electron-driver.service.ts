@@ -1,5 +1,6 @@
 import { ElectronService } from 'ngx-electron';
 import { VisualScriptingEditorDriverInterface, VisualScriptingEditorStorageInterface, VisualScriptingEditorSettingsInterface, VisualScriptingEditorProjectInterface } from 'visual-scripting-editor';
+import { VisualScriptingOpentracingService } from 'visual-scripting-opentracing';
 import { VisualScriptingElectronStorageService } from './visual-scripting-electron-storage.service';
 import { VisualScriptingElectronSettingsService } from './visual-scripting-electron-settings.service';
 import { VisualScriptingElectronProjectService } from './visual-scripting-electron-project.service';
@@ -10,11 +11,11 @@ export class VisualScriptingElectrongDriverService implements VisualScriptingEdi
   private settingsService: VisualScriptingElectronSettingsService;
   private projectService: VisualScriptingElectronProjectService;
 
-  constructor(electronService: ElectronService)
+  constructor(electronService: ElectronService, opentracingService: VisualScriptingOpentracingService)
   {
-    this.storageService = new VisualScriptingElectronStorageService(electronService);
-    this.settingsService = new VisualScriptingElectronSettingsService(electronService);
-    this.projectService = new VisualScriptingElectronProjectService(electronService);
+    this.storageService = new VisualScriptingElectronStorageService(electronService, opentracingService);
+    this.settingsService = new VisualScriptingElectronSettingsService(electronService, opentracingService);
+    this.projectService = new VisualScriptingElectronProjectService(electronService, opentracingService);
   }
 
   getStorage(): VisualScriptingEditorStorageInterface

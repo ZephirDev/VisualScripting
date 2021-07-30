@@ -13,7 +13,6 @@
     "electron": "^13.1.6",
     "uuid": "^8.3.2",
     "zipkin": "^0.22.0",
-    "zipkin-context-cls": "^0.22.0",
     "zipkin-transport-http": "^0.22.0"
   },
   "devDependencies": {

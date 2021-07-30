@@ -2,24 +2,30 @@ import { ElectronService } from 'ngx-electron';
 import { VisualScriptingEditorSettingsInterface } from 'visual-scripting-editor';
 
 import { Observable, Observer } from 'rxjs';
-import { DirectoryInterface, AbstractFileInterface } from 'visual-scripting-common';
+import {
+  DirectoryInterface,
+  AbstractFileInterface,
+  OpentracingOptionsInterface,
+  VisualScriptingIpcDecorator,
+  VisualScriptingIpcChannelsEnum,
+  VisualScriptingIpcChannelsMethodEnum,
+} from 'visual-scripting-common';
+import * as uuid from "uuid";
+import {VisualScriptingOpentracingService} from "visual-scripting-opentracing";
 
 export class VisualScriptingElectronSettingsService implements VisualScriptingEditorSettingsInterface {
+  private ipcDecorator: VisualScriptingIpcDecorator;
 
-  projectObservable : Observable<AbstractFileInterface|null>;
-  projectObserver?: Observer<AbstractFileInterface|null>;
-
-  constructor(electronService: ElectronService)
+  constructor(electronService: ElectronService, opentracingService: VisualScriptingOpentracingService)
   {
-    this.projectObservable = new Observable<AbstractFileInterface|null>((observer) => {
-      this.projectObserver = observer;
-      this.projectObserver!.next(null);
-    });
+    this.ipcDecorator = new VisualScriptingIpcDecorator(electronService.ipcRenderer, VisualScriptingIpcChannelsEnum.OPTIONS, uuid.v4);
+    this.ipcDecorator.addEventHandlers(opentracingService.getIpcEventHandlers());
+    this.ipcDecorator.listen();
   }
 
-  getProject(): Observable<AbstractFileInterface|null>
+  async getOpentracingSettings(): Promise<OpentracingOptionsInterface|null>
   {
-    return this.projectObservable;
+    return this.ipcDecorator.send<null, OpentracingOptionsInterface|null>(VisualScriptingIpcChannelsMethodEnum.OPTIONS_GET_OPENTRACING, null);
   }
 
 }

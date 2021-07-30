@@ -23,4 +23,7 @@ electron-serve:
 electron-dev: angular-build electron-build electron-serve
 
 up:
-	@./.scripts/docker-compose.sh
+	@./.scripts/docker-compose.up.sh
+
+down:
+	@./.scripts/docker-compose.down.sh

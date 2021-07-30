@@ -4,6 +4,7 @@ import { ErrorInterface } from './../types/error.interface';
 import { MessageInterface } from './../types/message.interface';
 import { VisualScriptingIpcChannelsMethodEnum } from './../enums/visual-scripting-ipc-channels-method.enum';
 import { VisualScriptingIpcChannelsEnum } from "../enums/visual-scripting-ipc-channels.enum";
+import {VisualScriptingIpcEventHandlersInterface} from "../types/visual-scripting-ipc-event-handlers.interface";
 
 export class VisualScriptingIpcDecorator {
     private static readonly IPC_DECORATOR = "IPC_DECORATOR";
@@ -18,6 +19,7 @@ export class VisualScriptingIpcDecorator {
         reject: (e: any) => void,
     }}
     private uuidGenerator: () => string;
+    private eventHandlers: VisualScriptingIpcEventHandlersInterface[];
 
     constructor(ipc: any, channel: VisualScriptingIpcChannelsEnum, uuidGenerator: () => string)
     {
@@ -27,6 +29,7 @@ export class VisualScriptingIpcDecorator {
         this.handlers = {};
         this.messages = {};
         this.uuidGenerator = uuidGenerator;
+        this.eventHandlers = [];
     }
 
     addHandler<ParameterType = void, ResultType = void>(method: VisualScriptingIpcChannelsMethodEnum, handler: (m: MessageInterface<ParameterType>) => Promise<ResultType>): void
@@ -56,14 +59,17 @@ export class VisualScriptingIpcDecorator {
     private handle(event: any, message: any): Promise<void>
     {
         if (message.method) {
+            this.eventHandlers.forEach(handler => handler.onMessage ? handler.onMessage(message) : null);
             return this.handleMessage(event, message);
         } else {
+            this.eventHandlers.forEach(handler => handler.onMessageResult ? handler.onMessageResult(message) : null);
             return this.handleResult(event, message);
         }
     }
 
     private async handleMessage(event: any, message: MessageInterface<any>): Promise<void>
     {
+        let resultMessage: MessageResultInterface<any> | null = null;
         try {
             if (!this.handlers[message.method]) {
                 throw {
@@ -74,12 +80,12 @@ export class VisualScriptingIpcDecorator {
             }
 
             let result = await this.handlers[message.method](message);
-            event.reply(this.channel, {
+            resultMessage = {
                 id: message.id,
                 result
-            } as MessageResultInterface);
+            } as MessageResultInterface;
         } catch(exception: any) {
-            event.reply(this.channel, {
+            resultMessage = {
                 id: message.id,
                 error: Object.assign({}, exception, {
                     annotations: Object.assign({}, exception.annotations || {}, {
@@ -87,8 +93,11 @@ export class VisualScriptingIpcDecorator {
                         method: message.method
                     })
                 })
-            } as MessageResultInterface);
+            } as MessageResultInterface;
         }
+
+        this.eventHandlers.forEach(handler => handler.onMessageResultSend ? handler.onMessageResultSend(resultMessage!) : null);
+        event.reply(this.channel, resultMessage);
     }
 
     private async handleResult(event: any, messageResult: MessageResultInterface<any>): Promise<void>
@@ -137,6 +146,14 @@ export class VisualScriptingIpcDecorator {
                 reject
             }
 
+            let message = {
+                id,
+                method,
+                parameters: parameter
+            } as MessageInterface<ParameterType>;
+
+            this.eventHandlers.forEach(handler => handler.onMessageSend ? handler.onMessageSend(message) : null);
+
             setTimeout(this.rejectMessage.bind(this, id, {
                 raiseBy: VisualScriptingIpcDecorator.IPC_DECORATOR,
                 code: VisualScriptingIpcErrorEnum.VisualScriptingIpcMessageTimeout.code,
@@ -146,11 +163,7 @@ export class VisualScriptingIpcDecorator {
                 }
             } as ErrorInterface), timeout);
 
-            this.ipc.send(this.channel, {
-                id,
-                method,
-                parameters: parameter
-            } as MessageInterface<ParameterType>);
+            this.ipc.send(this.channel, message);
         })
     }
 
@@ -161,5 +174,19 @@ export class VisualScriptingIpcDecorator {
         }
         this.ipc.on(this.channel, this.handle.bind(this));
         this.channelListen = true;
+    }
+
+    addEventHandlers(handlers: VisualScriptingIpcEventHandlersInterface)
+    {
+        if (!this.eventHandlers.includes(handlers)) {
+            this.eventHandlers.push(handlers);
+        }
+    }
+
+    removeEventHandlers(handlers: VisualScriptingIpcEventHandlersInterface)
+    {
+        if (this.eventHandlers.includes(handlers)) {
+            this.eventHandlers = this.eventHandlers.filter(item => item != handlers);
+        }
     }
 }

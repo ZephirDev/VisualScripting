@@ -32,11 +32,6 @@ export class VisualScriptingEditorComponent implements OnInit {
       this.driverService.setDriver(this.driver);
     }
     this.projectReady = false;
-    this.driverService.getDriver().getSettings().getProject().subscribe({
-      next: (project) => {
-        this.projectReady = project != null;
-      }
-    });
   }
 
   @HostListener('window:keydown', ['$event'])

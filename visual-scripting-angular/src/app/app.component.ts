@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { VisualScriptingEditorDriverInterface } from 'visual-scripting-editor';
 import { ElectronService } from 'ngx-electron';
-import { VisualScriptingIpcDecorator, VisualScriptingIpcChannelsMethodEnum, VisualScriptingIpcChannelsEnum } from 'visual-scripting-common';
+import { VisualScriptingOpentracingService } from 'visual-scripting-opentracing';
 import { VisualScriptingElectrongDriverService } from './driver/visual-scripting-electron-driver.service';
-
-import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-root',
@@ -13,28 +11,24 @@ import * as uuid from 'uuid';
 })
 export class AppComponent {
   title = 'visual-scripting-angular';
-  driver: VisualScriptingEditorDriverInterface|null = null;
-  electronService: ElectronService;
+  driver: VisualScriptingEditorDriverInterface;
 
-  constructor(electronService: ElectronService)
+  constructor(
+    private electronService: ElectronService,
+    private opentracingService: VisualScriptingOpentracingService,
+  )
   {
-    this.electronService = electronService;
     this.driver = new VisualScriptingElectrongDriverService(electronService);
   }
 
   ngOnInit(): void {
-    this.electronService.ipcRenderer.send('test', 'blop');
-    let ipc = new VisualScriptingIpcDecorator(this.electronService.ipcRenderer, VisualScriptingIpcChannelsEnum.FILE_SYSTEM, () => {
-      return uuid.v4();
-    });
-    ipc.listen();
-    ipc.send<string[], string[]>(VisualScriptingIpcChannelsMethodEnum.FILE_SYSTEM_LIST, [])
-    .then(r => {
-      console.log(r);
-    }, e => {
-      console.log('error');
-      console.log(e);
-    });
+    this.driver.getSettings().getOpentracingSettings()
+      .then(options => {
+        if (options) {
+          this.opentracingService.createTracer(options, "visual-scripting.angular");
+        }
+      })
+      .catch(console.log);
   }
 
 }

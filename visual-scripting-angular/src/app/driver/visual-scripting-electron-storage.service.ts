@@ -2,13 +2,15 @@ import { ElectronService } from 'ngx-electron';
 import { VisualScriptingEditorStorageInterface } from 'visual-scripting-editor';
 import { VisualScriptingIpcDecorator, VisualScriptingIpcChannelsEnum, VisualScriptingIpcChannelsMethodEnum, DirectoryInterface } from 'visual-scripting-common';
 import * as uuid from 'uuid';
+import {VisualScriptingOpentracingService} from "visual-scripting-opentracing";
 
 export class VisualScriptingElectronStorageService implements VisualScriptingEditorStorageInterface {
   private ipcDecorator: VisualScriptingIpcDecorator;
 
-  constructor(electronService: ElectronService)
+  constructor(electronService: ElectronService, opentracingService: VisualScriptingOpentracingService)
   {
     this.ipcDecorator = new VisualScriptingIpcDecorator(electronService.ipcRenderer, VisualScriptingIpcChannelsEnum.FILE_SYSTEM, uuid.v4);
+    this.ipcDecorator.addEventHandlers(opentracingService.getIpcEventHandlers());
     this.ipcDecorator.listen();
   }
 

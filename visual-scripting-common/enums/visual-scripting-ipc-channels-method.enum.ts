@@ -16,4 +16,8 @@ export enum VisualScriptingIpcChannelsMethodEnum {
     // ###> NODES ###
 
     // ###< NODES ###
+
+    // ###> OPTIONS ###
+    OPTIONS_GET_OPENTRACING = "OPTIONS_GET_OPENTRACING",
+    // ###< OPTIONS ###
 }

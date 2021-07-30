@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from 'primeng/dialog';
 import {AccordionModule} from "primeng/accordion";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {AccordionModule} from "primeng/accordion";
     ButtonModule,
     DialogModule,
     AccordionModule,
+    HttpClientModule,
   ],
   exports: [
     VisualScriptingOpentracingComponent

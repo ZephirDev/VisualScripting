@@ -11,13 +11,15 @@ import {
   CreateDirectoryInterface,
 } from 'visual-scripting-common';
 import { VisualScriptingEditorProjectInterface } from 'visual-scripting-editor';
+import {VisualScriptingOpentracingService} from "visual-scripting-opentracing";
 
 export class VisualScriptingElectronProjectService implements VisualScriptingEditorProjectInterface {
   private ipcDecorator: VisualScriptingIpcDecorator;
 
-  constructor(electronService: ElectronService)
+  constructor(electronService: ElectronService, opentracingService: VisualScriptingOpentracingService)
   {
     this.ipcDecorator = new VisualScriptingIpcDecorator(electronService.ipcRenderer, VisualScriptingIpcChannelsEnum.PROJECT, uuid.v4);
+    this.ipcDecorator.addEventHandlers(opentracingService.getIpcEventHandlers());
     this.ipcDecorator.listen();
   }
 

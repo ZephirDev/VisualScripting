@@ -1,3 +1,5 @@
+import {OptionsIpcChannel} from "./ipcChannels/options.ipc-channel";
+
 const {app, BrowserWindow, ipcMain} = require('electron')
 const url = require("url");
 const path = require("path");
@@ -5,6 +7,7 @@ const path = require("path");
 import {VisualScriptingIpcDecorator} from './common/public-api';
 import { FileSystemIpcChannel } from './ipcChannels/file-system.ipc-channel';
 import { ProjectIpcChannel } from './ipcChannels/project.ipc-channel';
+import {OpentracingServiceInstance} from "./services/opentracing.service";
 
 let mainWindow: any;
 
@@ -46,8 +49,10 @@ app.on('activate', function () {
 const ipcChannels: VisualScriptingIpcDecorator[] = [
   new FileSystemIpcChannel(ipcMain),
   new ProjectIpcChannel(ipcMain),
+  new OptionsIpcChannel(ipcMain),
 ];
 for (let ipcChannel of ipcChannels) {
+  ipcChannel.addEventHandlers(OpentracingServiceInstance.getOpentracingIpcHandlers());
   ipcChannel.listen();
 }
 console.log(`Ipc channels are ready. [${ipcChannels.length} channels]`);

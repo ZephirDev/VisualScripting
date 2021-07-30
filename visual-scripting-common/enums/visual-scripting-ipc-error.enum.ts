@@ -47,4 +47,12 @@ export const VisualScriptingIpcErrorEnum = {
         code: 500_012,
         what: "The file already exist.",
     },
+    VisualScriptingIpcOpentracingDriverCreationFailure: {
+        code: 500_013,
+        what: "The driver can't be created.",
+    },
+    VisualScriptingIpcOpentracingDriverCreationDisabled: {
+        code: 500_014,
+        what: "The driver creation is disabled.",
+    },
 }
