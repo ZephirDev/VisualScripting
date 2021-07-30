@@ -26,6 +26,8 @@ export * from './enums/visual-scripting-ipc-raise-by.enum';
 export * from './decorators/visual-scripting-ipc.decorator';
 export * from './decorators/opentracing-tracer-decorator.interface';
 export * from './decorators/zipkin-tracer.decorator';
+export * from './decorators/opentracing-span-decorator.interface';
+export * from './decorators/zipkin-span.decorator';
 
 export * from './helpers/array.helpers';
 export * from './helpers/abstract-opentracing.helpers';
