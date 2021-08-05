@@ -8,6 +8,8 @@ import {MessageInterface} from "../types/message.interface";
 import {ErrorBuilder} from "../builders/error.builder";
 
 export class ExecutionContext {
+    private static readonly CLASS_NAME = 'ExecutionContext';
+
     context: ContextInterface;
 
     constructor(context: ContextInterface = {})
@@ -32,7 +34,7 @@ export class ExecutionContext {
     {
         if (null === this.context[name] || undefined === this.context[name]) {
             throw ErrorBuilder.For(VisualScriptingIpcRaiseByEnum.COMMON)
-                .klass(ExecutionContext)
+                .klass(ExecutionContext.CLASS_NAME)
                 .attribute('context' + name)
                 .nullPointer();
         }

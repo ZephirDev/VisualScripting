@@ -14,11 +14,11 @@ export class PromiseContextHandler
     }
 
     private promise: Promise<ExecutionContext>;
-    private resolveCallback: (ctx: ExecutionContext) => {};
-    private rejectCallback: (err: ErrorInterface) => {};
-    private status: boolean;
+    private resolveCallback: (ctx: ExecutionContext) => void;
+    private rejectCallback: (err: ErrorInterface) => void;
+    private status: PromiseStatusEnum;
 
-    constructor(promise: Promise<ExecutionContext>, resolveCallback: (ctx: ExecutionContext) => {}, rejectCallback: (err: ErrorInterface) => {}) {
+    constructor(promise: Promise<ExecutionContext>, resolveCallback: (ctx: ExecutionContext) => void, rejectCallback: (err: ErrorInterface) => void) {
         this.promise = promise;
         this.resolveCallback = resolveCallback;
         this.rejectCallback = rejectCallback;

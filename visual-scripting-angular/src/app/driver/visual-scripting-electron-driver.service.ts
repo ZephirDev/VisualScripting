@@ -1,4 +1,5 @@
 import { ElectronService } from 'ngx-electron';
+import { EventsService } from 'visual-scripting-common';
 import { VisualScriptingEditorDriverInterface, VisualScriptingEditorStorageInterface, VisualScriptingEditorSettingsInterface, VisualScriptingEditorProjectInterface } from 'visual-scripting-editor';
 import { VisualScriptingOpentracingService } from 'visual-scripting-opentracing';
 import { VisualScriptingElectronStorageService } from './visual-scripting-electron-storage.service';
@@ -13,6 +14,8 @@ export class VisualScriptingElectrongDriverService implements VisualScriptingEdi
 
   constructor(electronService: ElectronService, opentracingService: VisualScriptingOpentracingService)
   {
+    EventsService.Init();
+    EventsService.GetInstance().addHandlerFromStruct(opentracingService.getIpcEventHandlers());
     this.storageService = new VisualScriptingElectronStorageService(electronService, opentracingService);
     this.settingsService = new VisualScriptingElectronSettingsService(electronService, opentracingService);
     this.projectService = new VisualScriptingElectronProjectService(electronService, opentracingService);

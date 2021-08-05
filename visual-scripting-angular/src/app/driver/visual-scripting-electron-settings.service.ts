@@ -6,7 +6,7 @@ import {
   DirectoryInterface,
   AbstractFileInterface,
   OpentracingOptionsInterface,
-  VisualScriptingIpcDecorator,
+  IpcDecorator,
   VisualScriptingIpcChannelsEnum,
   VisualScriptingIpcChannelsMethodEnum,
 } from 'visual-scripting-common';
@@ -14,12 +14,11 @@ import * as uuid from "uuid";
 import {VisualScriptingOpentracingService} from "visual-scripting-opentracing";
 
 export class VisualScriptingElectronSettingsService implements VisualScriptingEditorSettingsInterface {
-  private ipcDecorator: VisualScriptingIpcDecorator;
+  private ipcDecorator: IpcDecorator;
 
   constructor(electronService: ElectronService, opentracingService: VisualScriptingOpentracingService)
   {
-    this.ipcDecorator = new VisualScriptingIpcDecorator(electronService.ipcRenderer, VisualScriptingIpcChannelsEnum.OPTIONS, uuid.v4);
-    this.ipcDecorator.addEventHandlers(opentracingService.getIpcEventHandlers());
+    this.ipcDecorator = new IpcDecorator(electronService.ipcRenderer, VisualScriptingIpcChannelsEnum.OPTIONS);
     this.ipcDecorator.listen();
   }
 

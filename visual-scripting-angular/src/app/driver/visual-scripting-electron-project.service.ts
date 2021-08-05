@@ -6,7 +6,7 @@ import {
   RegularFileInterface,
   VisualScriptingIpcChannelsEnum,
   VisualScriptingIpcChannelsMethodEnum,
-  VisualScriptingIpcDecorator,
+  IpcDecorator,
   AbstractFileInterface,
   CreateDirectoryInterface,
 } from 'visual-scripting-common';
@@ -14,28 +14,33 @@ import { VisualScriptingEditorProjectInterface } from 'visual-scripting-editor';
 import {VisualScriptingOpentracingService} from "visual-scripting-opentracing";
 
 export class VisualScriptingElectronProjectService implements VisualScriptingEditorProjectInterface {
-  private ipcDecorator: VisualScriptingIpcDecorator;
+  private ipcDecorator: IpcDecorator;
 
   constructor(electronService: ElectronService, opentracingService: VisualScriptingOpentracingService)
   {
-    this.ipcDecorator = new VisualScriptingIpcDecorator(electronService.ipcRenderer, VisualScriptingIpcChannelsEnum.PROJECT, uuid.v4);
-    this.ipcDecorator.addEventHandlers(opentracingService.getIpcEventHandlers());
+    this.ipcDecorator = new IpcDecorator(electronService.ipcRenderer, VisualScriptingIpcChannelsEnum.PROJECT);
     this.ipcDecorator.listen();
   }
 
   create(directory: DirectoryInterface): Promise<ProjectInterface>
   {
-    return this.ipcDecorator.send<DirectoryInterface, ProjectInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_CREATE, directory, false);
+    return this.ipcDecorator.send<DirectoryInterface, ProjectInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_CREATE, directory, {
+      notNull: true
+    }).then(r => r!);
   }
 
   load(file: RegularFileInterface): Promise<ProjectInterface>
   {
-    return this.ipcDecorator.send<RegularFileInterface, ProjectInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_LOAD, file, false);
+    return this.ipcDecorator.send<RegularFileInterface, ProjectInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_LOAD, file, {
+      notNull: true
+    }).then(r => r!);
   }
 
   listNodesOf(directories: DirectoryInterface[]): Promise<AbstractFileInterface[]>
   {
-    return this.ipcDecorator.send<DirectoryInterface[], AbstractFileInterface[]>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_LIST_OF, directories, false);
+    return this.ipcDecorator.send<DirectoryInterface[], AbstractFileInterface[]>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_LIST_OF, directories, {
+      notNull: true
+    }).then(r => r!);
   }
 
   createNodesDirectoryOf(directories: DirectoryInterface[], name: string): Promise<DirectoryInterface>
@@ -43,6 +48,8 @@ export class VisualScriptingElectronProjectService implements VisualScriptingEdi
     return this.ipcDecorator.send<CreateDirectoryInterface, DirectoryInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_CREATE_DIRECTORY, {
       directories,
       name,
-    }, false);
+    }, {
+      notNull: true
+    }).then(r => r!);
   }
 }

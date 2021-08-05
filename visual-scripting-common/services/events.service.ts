@@ -4,8 +4,10 @@ import {EventsEnum} from "../enums/events.enum";
 import {ExecutionContext} from "../executions/execution.context";
 import {HandlerInterface} from "../types/handler.interface";
 import {PriorityEventInterface} from "../types/priority-event.interface";
+import {PriorityEventHandlersInterface} from "../types/priority-event-handlers.interface";
 
 export class EventsService {
+    private static readonly CLASS_NAME = 'EventsService';
     private static INSTANCE: EventsService|null = null;
     static readonly MIN_PRIORITIES = -100_000;
     static readonly MAX_PRIORITIES = 100_000;
@@ -32,6 +34,7 @@ export class EventsService {
 
     constructor()
     {
+        this.handlers = [];
         for (let i = 0; i < (EventsService.MIN_PRIORITIES * -1) + EventsService.MAX_PRIORITIES + 3; i++) {
             this.handlers.push([]);
         }
@@ -68,7 +71,7 @@ export class EventsService {
                     }
                 }
                 
-                return Promise.all(promises);
+                return Promise.all(promises).then(() => {});
             });
         }
         return promise;
@@ -78,7 +81,7 @@ export class EventsService {
     {
         if (priority < EventsService.MIN_PRIORITIES || priority > EventsService.MAX_PRIORITIES) {
             throw ErrorBuilder.For(VisualScriptingIpcRaiseByEnum.COMMON)
-                .klass(EventsService)
+                .klass(EventsService.CLASS_NAME)
                 .addAnnotation("priority", {
                     max: EventsService.MAX_PRIORITIES,
                     min: EventsService.MIN_PRIORITIES
@@ -112,5 +115,19 @@ export class EventsService {
     addHandlerFor(priorityEvent: PriorityEventInterface, handler: HandlerInterface<void>): () => void
     {
         return this.addHandler(priorityEvent.priority, priorityEvent.event, handler);
+    }
+
+    addHandlerFromStruct(list: PriorityEventHandlersInterface[]): () => void
+    {
+        let fn = () => {};
+        for (let item of list) {
+            for (let handler of item.handlers) {
+                fn = ((old: () => void, remover: () => void) => {
+                    old();
+                    remover();
+                }).bind(null, fn, this.addHandlerFor(item.priorityEvent, handler));
+            }
+        }
+        return fn;
     }
 }

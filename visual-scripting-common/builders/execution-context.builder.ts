@@ -1,11 +1,8 @@
 import {ExecutionContext} from "../executions/execution.context";
 import {MessageInterface} from "../types/message.interface";
-import {ContextInterface} from "../executions/context.interface";
 import * as uuid from 'uuid';
 import {MessageResultInterface} from "../types/message-result.interface";
 import {ErrorInterface} from "../types/error.interface";
-import {VisualScriptingIpcRaiseByEnum} from "../../../../../../visual-scripting-common/enums/visual-scripting-ipc-raise-by.enum";
-import {VisualScriptingIpcErrorEnum} from "../../../../../../visual-scripting-common/enums/visual-scripting-ipc-error.enum";
 
 export class ExecutionContextBuilder {
     static newBuilder(ctx?: ExecutionContext): ExecutionContextBuilder

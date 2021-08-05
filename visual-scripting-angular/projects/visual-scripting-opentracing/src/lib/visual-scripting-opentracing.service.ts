@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {OpentracingHelpers} from "./helpers/opentracing.helpers";
-import {OpentracingTracerDecoratorInterface, OpentracingOptionsInterface, MessageInterface, OpentracingSpanDecoratorInterface, VisualScriptingIpcEventHandlersInterface} from "visual-scripting-common";
+import {OpentracingTracerDecoratorInterface, OpentracingOptionsInterface, ExecutionContext, OpentracingSpanDecoratorInterface, PriorityEventHandlersInterface, EventsEnum, PriorityEventsEnum} from "visual-scripting-common";
 
 @Injectable({
   providedIn: 'root'
@@ -10,20 +10,27 @@ export class VisualScriptingOpentracingService {
   private opentracingHelpers: OpentracingHelpers;
   private tracer?: OpentracingTracerDecoratorInterface;
   private rootSpan?: OpentracingSpanDecoratorInterface;
-  private ipcEventHandlers: VisualScriptingIpcEventHandlersInterface;
+  private ipcEventHandlers: PriorityEventHandlersInterface[];
 
   constructor(
     private httpClient: HttpClient,
   )
   {
     this.opentracingHelpers = new OpentracingHelpers(this.httpClient);
-    this.ipcEventHandlers = {
-      onMessageSend: (message: MessageInterface) => {
-        if (!this.rootSpan) return;
-        let object = message as any;
-        object.opentracing = this.rootSpan!.getPropagationValues();
-      }
-    } as VisualScriptingIpcEventHandlersInterface;
+    this.ipcEventHandlers = [{
+      priorityEvent: {
+        event: EventsEnum.MESSAGE_SEND_EVENT,
+        priority: PriorityEventsEnum.MESSAGE_SEND_EVENT.PRE_HANDLE,
+      },
+      handlers: [{
+        handle: async (ctx: ExecutionContext) => {
+          if (this.rootSpan) {
+            let message = ctx.getMessage() as any;
+            message.opentracing = this.rootSpan.getPropagationValues();
+          }
+        }
+      }],
+    }]
   }
 
   createTracer(options: OpentracingOptionsInterface, name: string): void
@@ -81,7 +88,7 @@ export class VisualScriptingOpentracingService {
     }
   }
 
-  getIpcEventHandlers(): VisualScriptingIpcEventHandlersInterface
+  getIpcEventHandlers(): PriorityEventHandlersInterface[]
   {
     return this.ipcEventHandlers;
   }

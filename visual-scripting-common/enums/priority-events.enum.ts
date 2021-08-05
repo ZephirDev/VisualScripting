@@ -14,4 +14,9 @@ export const PriorityEventsEnum = {
         HANDLE: 0,
         POST_HANDLE: 10_000,
     },
+    MESSAGE_SEND_EVENT: {
+        PRE_HANDLE: -10_000,
+        HANDLE: 0,
+        POST_HANDLE: 10_000,
+    },
 };
