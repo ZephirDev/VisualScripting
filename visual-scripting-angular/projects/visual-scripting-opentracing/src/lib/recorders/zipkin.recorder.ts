@@ -13,8 +13,6 @@ export class ZipkinRecorder extends AbstractZipkinRecorder {
 
   record(spans: ZipkinSpanInterface[]): void
   {
-    console.log(this.options);
-    console.log(spans);
     this.httpClient.post(`${this.options.scheme}://${this.options.host}:${this.options.port}/${this.options.path || 'api/v2/spans'}`, JSON.stringify(spans))
       .subscribe((result) => {}, console.log);
   }

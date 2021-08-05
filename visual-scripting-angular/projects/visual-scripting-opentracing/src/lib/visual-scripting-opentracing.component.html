@@ -15,11 +15,11 @@
         <tr>
           <td><h2>Timer:</h2></td>
           <td><h2>{{getTimerValue()}}</h2></td>
-          <td rowspan="2" class="text-align-center"><p-button (onClick)="isRecording() ? stopRecord() : startRecord()" [icon]="isRecording() ? 'pi pi-pause' : 'pi pi-play'" [styleClass]="isRecording() ? 'p-button-danger' : 'p-button-success'"></p-button></td>
+          <td rowspan="2" class="text-align-center"><p-button (onClick)="isRecording() ? stopRecord() : startRecord()" [icon]="isRecording() ? 'pi pi-pause' : 'pi pi-play'" [styleClass]="isRecording() ? 'p-button-danger' : 'p-button-success'" [disabled]="!canRecord()"></p-button></td>
         </tr>
         <tr>
           <td><h2>X-Tracing-Id:</h2></td>
-          <td>my-id</td>
+          <td>{{getRootSpanTraceId()}}</td>
         </tr>
       </table>
     </p-accordionTab>

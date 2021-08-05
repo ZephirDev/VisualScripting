@@ -55,4 +55,12 @@ export const VisualScriptingIpcErrorEnum = {
         code: 500_014,
         what: "The driver creation is disabled.",
     },
+    NullPointer: {
+        code: 500_015,
+        what: "Null pointer",
+    },
+    InvalidNumberValue: {
+        code: 500_016,
+        what: "Invalid number value",
+    },
 }

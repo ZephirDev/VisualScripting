@@ -70,4 +70,14 @@ export class ZipkinSpanDecorator implements OpentracingSpanDecoratorInterface {
         return props;
     }
 
+    getTraceId(): string
+    {
+        return this.span.traceId;
+    }
+
+    getSpanId(): string
+    {
+        return this.span.id;
+    }
+
 }

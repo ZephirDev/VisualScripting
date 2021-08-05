@@ -29,16 +29,11 @@ export class VisualScriptingOpentracingService {
   createTracer(options: OpentracingOptionsInterface, name: string): void
   {
     this.tracer = this.opentracingHelpers.newClient(options).newTracer(name);
-    this.rootSpan = this.tracer.createSpan(null, "root");
-    this.rootSpan.finish();
   }
 
   deleteTracer(): void
   {
-    if (this.rootSpan) {
-      delete this.rootSpan;
-    }
-
+    this.deleteRootSpan();
     if (this.tracer) {
       delete this.tracer;
     }
@@ -56,9 +51,34 @@ export class VisualScriptingOpentracingService {
     return this.tracer;
   }
 
+  createRootSpan(name: string): boolean
+  {
+    if (this.tracer) {
+      this.rootSpan = this.tracer.createSpan(null, name);
+      return true;
+    }
+
+    return false;
+  }
+
+  deleteRootSpan(): void
+  {
+    if (this.rootSpan) {
+      this.rootSpan.finish();
+      delete this.rootSpan;
+    }
+  }
+
   getRootSpan(): OpentracingSpanDecoratorInterface|undefined
   {
     return this.rootSpan;
+  }
+
+  withRootSpan(fn: (span: OpentracingSpanDecoratorInterface) => void)
+  {
+    if (this.rootSpan) {
+      fn(this.rootSpan);
+    }
   }
 
   getIpcEventHandlers(): VisualScriptingIpcEventHandlersInterface

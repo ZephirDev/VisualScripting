@@ -4,4 +4,6 @@ export interface OpentracingSpanDecoratorInterface
     tag(name: string, value: string): void;
     finish(): void;
     getPropagationValues(): {[k: string]: string};
+    getTraceId(): string;
+    getSpanId(): string;
 }

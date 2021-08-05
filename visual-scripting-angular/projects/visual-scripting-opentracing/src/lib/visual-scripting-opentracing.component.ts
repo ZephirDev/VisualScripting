@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {Observable, Subscription, timer} from "rxjs";
+import {Component, OnInit} from '@angular/core';
+import {Observable, timer} from "rxjs";
+import {VisualScriptingOpentracingService} from "./visual-scripting-opentracing.service";
 
 @Component({
   selector: 'visual-scripting-opentracing',
@@ -13,7 +14,9 @@ export class VisualScriptingOpentracingComponent implements OnInit {
   private timerString: string = "";
   private toolbarDisplay: boolean = false;
 
-  constructor()
+  constructor(
+    private opentracingService: VisualScriptingOpentracingService
+  )
   {
     this.record = false;
     this.timer = timer(0, 1000);
@@ -26,19 +29,40 @@ export class VisualScriptingOpentracingComponent implements OnInit {
 
   startRecord()
   {
-    this.record = true;
-    this.timestamp = Date.now();
+    if (this.opentracingService.getTracer()) {
+      this.record = true;
+      this.timestamp = Date.now();
+      this.opentracingService.createRootSpan("Recorder");
+    }
   }
 
   stopRecord()
   {
     this.record = false;
     this.timestamp = -1;
+    let rootSpan = this.opentracingService.getRootSpan();
+    if (rootSpan) {
+      this.opentracingService.deleteRootSpan();
+    }
+  }
+
+  canRecord(): boolean
+  {
+    return this.opentracingService.getTracer() != null;
   }
 
   isRecording(): boolean
   {
     return this.record;
+  }
+
+  getRootSpanTraceId(): string
+  {
+    let rootSpan = this.opentracingService.getRootSpan();
+    if (rootSpan) {
+      return rootSpan.getTraceId();
+    }
+    return "";
   }
 
   getDuration(): number

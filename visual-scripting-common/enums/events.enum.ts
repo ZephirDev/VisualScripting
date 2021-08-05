@@ -1,0 +1,4 @@
+export enum EventsEnum {
+    MESSAGE_EVENT = 'MESSAGE_EVENT',
+    MESSAGE_RESULT_EVENT = 'MESSAGE_RESULT_EVENT',
+}
