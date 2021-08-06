@@ -4,7 +4,7 @@ const {app, BrowserWindow, ipcMain} = require('electron')
 const url = require("url");
 const path = require("path");
 
-import {VisualScriptingIpcDecorator} from './common/public-api';
+import {EventsService, IpcDecorator} from './common/public-api';
 import { FileSystemIpcChannel } from './ipcChannels/file-system.ipc-channel';
 import { ProjectIpcChannel } from './ipcChannels/project.ipc-channel';
 import {OpentracingServiceInstance} from "./services/opentracing.service";
@@ -46,13 +46,14 @@ app.on('activate', function () {
   if (mainWindow === null) createWindow()
 })
 
-const ipcChannels: VisualScriptingIpcDecorator[] = [
+EventsService.Init();
+EventsService.GetInstance().addHandlerFromStruct(OpentracingServiceInstance.getOpentracingIpcHandlers());
+const ipcChannels: IpcDecorator[] = [
   new FileSystemIpcChannel(ipcMain),
   new ProjectIpcChannel(ipcMain),
   new OptionsIpcChannel(ipcMain),
 ];
 for (let ipcChannel of ipcChannels) {
-  ipcChannel.addEventHandlers(OpentracingServiceInstance.getOpentracingIpcHandlers());
   ipcChannel.listen();
 }
 console.log(`Ipc channels are ready. [${ipcChannels.length} channels]`);

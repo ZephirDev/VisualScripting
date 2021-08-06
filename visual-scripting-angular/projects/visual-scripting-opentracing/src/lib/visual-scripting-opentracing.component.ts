@@ -13,6 +13,7 @@ export class VisualScriptingOpentracingComponent implements OnInit {
   private timer: Observable<number>;
   private timerString: string = "";
   private toolbarDisplay: boolean = false;
+  position: string = '';
 
   constructor(
     private opentracingService: VisualScriptingOpentracingService
@@ -20,6 +21,7 @@ export class VisualScriptingOpentracingComponent implements OnInit {
   {
     this.record = false;
     this.timer = timer(0, 1000);
+    this.setBottomLeftPosition();
   }
 
   ngOnInit(): void
@@ -101,5 +103,58 @@ export class VisualScriptingOpentracingComponent implements OnInit {
         return r;
     }
     this.timerString = `${zeroPlaceholder(Math.floor(time / 3600), 2)}:${zeroPlaceholder(Math.floor((time / 60) % 60), 2)}:${zeroPlaceholder(time % 60, 2)}`;
+  }
+
+  setTopLeftPosition(): void
+  {
+    this.position = 'top-left';
+  }
+
+  isTopLeftPosition(): boolean
+  {
+    return this.position == 'top-left';
+  }
+
+  setTopRightPosition(): void
+  {
+    this.position = 'top-right';
+  }
+
+  isTopRightPosition(): boolean
+  {
+    return this.position == 'top-right';
+  }
+
+  setBottomLeftPosition(): void
+  {
+    this.position = 'bottom-left';
+  }
+
+  isBottomLeftPosition(): boolean
+  {
+    return this.position == 'bottom-left';
+  }
+
+  setBottomRightPosition(): void
+  {
+    this.position = 'bottom-right';
+  }
+
+  isBottomRightPosition(): boolean
+  {
+    return this.position == 'bottom-right';
+  }
+
+  dynamicToolbarButtonClass(): string
+  {
+    if (this.isTopLeftPosition()) {
+      return 'p-top-left';
+    } else if (this.isTopRightPosition()) {
+      return 'p-top-right';
+    } else if (this.isBottomRightPosition()) {
+      return 'p-bottom-right';
+    } else {
+      return 'p-bottom-left';
+    }
   }
 }

@@ -6,7 +6,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from 'primeng/dialog';
 import {AccordionModule} from "primeng/accordion";
+import {RadioButtonModule} from 'primeng/radiobutton';
 import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -16,11 +18,13 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     ToolbarModule,
     ButtonModule,
     DialogModule,
     AccordionModule,
     HttpClientModule,
+    RadioButtonModule,
   ],
   exports: [
     VisualScriptingOpentracingComponent

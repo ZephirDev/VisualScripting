@@ -6,10 +6,16 @@ export class PromiseContextHandler
 {
     static async newPromiseHandler(): Promise<PromiseContextHandler>
     {
-        return new Promise<PromiseContextHandler>(resolveHandler => {
-            let promise = new Promise<ExecutionContext>((resolve, reject) => {
-                resolveHandler(new PromiseContextHandler(promise, resolve, reject));
+        let promise: Promise<ExecutionContext>|null = null;
+        return new Promise(resolveHandler => {
+            promise = new Promise<ExecutionContext>((resolve, reject) => {
+                resolveHandler({
+                    resolve,
+                    reject,
+                });
             });
+        }).then((r: any) => {
+            return new PromiseContextHandler(promise!, r.resolve, r.reject)
         })
     }
 

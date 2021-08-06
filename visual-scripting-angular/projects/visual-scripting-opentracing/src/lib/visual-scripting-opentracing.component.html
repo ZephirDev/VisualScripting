@@ -23,7 +23,31 @@
         </tr>
       </table>
     </p-accordionTab>
+    <p-accordionTab header="Toolbar button position options">
+      <table class="w-100">
+        <tr>
+          <td>
+            <p-radioButton name="position" value="top-left" [(ngModel)]="position" inputId="topLeft"></p-radioButton>
+            <label for="topLeft">Top Left</label>
+          </td>
+          <td>
+            <p-radioButton name="position" value="top-right" [(ngModel)]="position" inputId="topRight"></p-radioButton>
+            <label for="topRight">Top Right</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p-radioButton name="position" value="bottom-left" [(ngModel)]="position" inputId="bottomLeft"></p-radioButton>
+            <label for="bottomLeft">Bottom Left</label>
+          </td>
+          <td>
+            <p-radioButton name="position" value="bottom-right" [(ngModel)]="position" inputId="bottomRight"></p-radioButton>
+            <label for="bottomRight">Bottom Right</label>
+          </td>
+        </tr>
+      </table>
+    </p-accordionTab>
   </p-accordion>
 </p-dialog>
 
-<p-button styleClass="visual-scripting-opentracing-toolbar" *ngIf="!isToolbarDisplayed()" icon="pi pi-angle-up" (onClick)="setToolbarDisplay(true)" label="Toolbar"></p-button>
+<p-button [styleClass]="'visual-scripting-opentracing-toolbar ' + dynamicToolbarButtonClass()" *ngIf="!isToolbarDisplayed()" icon="pi pi-angle-up" (onClick)="setToolbarDisplay(true)" label="Toolbar"></p-button>

@@ -1,7 +1,25 @@
 ::ng-deep .visual-scripting-opentracing-toolbar {
   position: fixed;
+}
+
+::ng-deep .p-bottom-right {
   right: 0;
   bottom: 0;
+}
+
+::ng-deep .p-bottom-left {
+  left: 0;
+  bottom: 0;
+}
+
+::ng-deep .p-top-right {
+  right: 0;
+  top: 0;
+}
+
+::ng-deep .p-top-left {
+  left: 0;
+  top: 0;
 }
 
 ::ng-deep .m-0 {

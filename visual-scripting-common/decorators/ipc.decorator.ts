@@ -33,6 +33,7 @@ export class IpcDecorator {
 
     private handle(event: any, message: any): void
     {
+        console.log(message);
         if (message.method) {
             this.handleMessage(event, message).catch(console.log);
         } else {
@@ -126,9 +127,12 @@ export class IpcDecorator {
         }
         
         let promiseHandler = await PromiseContextHandler.newPromiseHandler();
-        let timeoutId: number|null = null;
         if (timeout > 0) {
-            timeoutId = setTimeout(() => {
+            setTimeout(() => {
+                if (!promiseHandler.isRunning()) {
+                    return;
+                }
+
                 promiseHandler.reject(ErrorBuilder.For(VisualScriptingIpcRaiseByEnum.COMMON)
                     .klass(IpcDecorator.CLASS_NAME)
                     .addAnnotation("timeout", timeout)
@@ -147,11 +151,7 @@ export class IpcDecorator {
             }
         }]);
 
-        return promiseHandler.getPromise().finally(() => {
-            if (timeoutId !== null) {
-                clearTimeout(timeoutId);
-            }
-        });
+        return promiseHandler.getPromise();
     }
 
     sendResultWithExecutionContext<ParameterType>(method: string, parameter: ParameterType, options: {timeout?: number} = {}): Promise<ExecutionContext>

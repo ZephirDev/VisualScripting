@@ -21,12 +21,12 @@ setupSymlink "visual-scripting-common" \
   "visual-scripting-angular/projects/visual-scripting-common/src/lib";
 
 setupSymlink "env.json" \
-  "visual-scripting-electron/src/assets/env.json" \
-  "visual-scripting-angular/src/assets/env.json";
+  "visual-scripting-electron/src/assets/env.json";
+  # "visual-scripting-angular/src/assets/env.json";
 
 setupSymlink "env.dev.json" \
-  "visual-scripting-electron/src/assets/env.dev.json" \
-  "visual-scripting-angular/src/assets/env.dev.json";
+  "visual-scripting-electron/src/assets/env.dev.json";
+  # "visual-scripting-angular/src/assets/env.dev.json";
 
 
 echo "###< projects/setup ###"

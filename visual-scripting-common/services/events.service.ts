@@ -60,7 +60,7 @@ export class EventsService {
             promise = promise.then(() => {
                 let promises: Promise<void>[] = [];
 
-                while (callback && callbackIndex < callback.length && i == callback[callbackIndex].priority) {
+                while (callback && callbackIndex < callback.length && i == callback[callbackIndex].priority + EventsService.MIN_PRIORITIES * -1 + 1) {
                     promises.push(callback[callbackIndex].handler.handle(context));
                     callbackIndex++;
                 }
@@ -92,8 +92,7 @@ export class EventsService {
                 .invalidNumberValue(priority)
         }
 
-        let truePriority = priority + EventsService.MAX_PRIORITIES * -1;
-
+        let truePriority = priority + EventsService.MIN_PRIORITIES * -1;
         if (!this.handlers[truePriority].includes(handlers)) {
             this.handlers[truePriority].push(handlers);
         }
