@@ -9,6 +9,8 @@ import {
   IpcDecorator,
   AbstractFileInterface,
   CreateDirectoryInterface,
+  NodeInterface,
+  CreateNodeInterface,
 } from 'visual-scripting-common';
 import { VisualScriptingEditorProjectInterface } from 'visual-scripting-editor';
 import {VisualScriptingOpentracingService} from "visual-scripting-opentracing";
@@ -47,6 +49,16 @@ export class VisualScriptingElectronProjectService implements VisualScriptingEdi
   {
     return this.ipcDecorator.send<CreateDirectoryInterface, DirectoryInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_CREATE_DIRECTORY, {
       directories,
+      name,
+    }, {
+      notNull: true
+    }).then(r => r!);
+  }
+
+  createNode(directories: DirectoryInterface[], name: string): Promise<NodeInterface>
+  {
+    return this.ipcDecorator.send<CreateNodeInterface, NodeInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_CREATE_NODE, {
+      parents: directories,
       name,
     }, {
       notNull: true

@@ -12,7 +12,7 @@ import {
     VisualScriptingIpcErrorEnum,
     VisualScriptingIpcRaiseByEnum,
 } from './../common/public-api';
-import {FileSystemService, FileSystemServiceInstance} from './file-system.service';
+import {FileSystemServiceInstance} from './file-system.service';
 import {CreateNodeInterface} from "../../../visual-scripting-common/types/create-node.interface";
 import {NodeInterface} from "../common/types/node.interface";
 
@@ -127,7 +127,14 @@ export class ProjectService {
     async createNode(createNode: CreateNodeInterface): Promise<NodeInterface>
     {
         this.createNodesFolder();
-        let folders = [this.getNodesFolder()!, ...createNode.parents];
+        let nodesFolder = this.getNodesFolder()!;
+        let folders: DirectoryInterface[] = [nodesFolder, {
+            path: nodesFolder.path + '/' + nodesFolder.name + '/.',
+            name: '.',
+            dirname: nodesFolder.path + '/' + nodesFolder.name,
+            mode: nodesFolder.mode,
+            type: FileTypeEnum.DIRECTORY,
+        }, ...createNode.parents];
         let parent = await FileSystemServiceInstance.mkdir(folders.slice(0, folders.length - 1), folders[folders.length - 1]);
         let path = parent.path + '/' + createNode.name + '.node';
 

@@ -33,7 +33,6 @@ export class IpcDecorator {
 
     private handle(event: any, message: any): void
     {
-        console.log(message);
         if (message.method) {
             this.handleMessage(event, message).catch(console.log);
         } else {
@@ -168,6 +167,10 @@ export class IpcDecorator {
             .then(async (result) => {
                 if (result.hasMessageResult()) {
                     let messageResult = result.getMessageResult<ResultType>();
+                    if (messageResult.error) {
+                        throw messageResult.error;
+                    }
+
                     if (messageResult.result || !options.notNull) {
                         return messageResult.result || null;
                     }

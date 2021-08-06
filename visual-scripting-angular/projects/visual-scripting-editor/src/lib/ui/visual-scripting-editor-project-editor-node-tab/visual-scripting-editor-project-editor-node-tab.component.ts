@@ -132,6 +132,71 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
     });
   }
 
+  openNewNodePopup(parent?: TreeNode)
+  {
+    this.dynamicDialogService.open(VisualScriptingEditorDialogInputTextComponent, {
+      header: "New node",
+      data: {
+        message: "Node name",
+        canValidate: (name: string) => {
+          let children: TreeNode[] = this.files;
+          if (parent) {
+            children = parent.children || [];
+          }
+          for (let node of children) {
+            if (node.data.file.name == name + '.node') {
+              return false;
+            }
+          }
+          return true;
+        }
+      }
+    }).onClose.subscribe((name?: string) => {
+      if (!name) {
+        return;
+      }
+
+      let folders: DirectoryInterface[] = [];
+      if (parent) {
+        let item: TreeNode|undefined = parent;
+        do {
+          folders.push(item.data.file);
+          item = item.parent;
+        } while(item);
+        folders = folders.reverse();
+      }
+
+      this.uiService.setLoading(true);
+      this.driverService.getDriver().getProject().createNode(folders, name)
+          .then(node => {
+            let item = {
+              label: node.file!.name,
+              icon: node.file!.type === FileTypeEnum.DIRECTORY ? 'pi pi-folder' : 'pi pi-file',
+              children: [],
+              data: {
+                node,
+              }
+            };
+
+            if (parent) {
+              parent.children!.push(item)
+            } else {
+              this.files.push(item);
+            }
+
+            this.uiService.setLoading(false);
+          })
+          .catch(err => {
+            this.uiService.setLoading(false);
+            this.messageService.add({
+              severity: 'error',
+              summary: "Create node",
+              detail: JSON.stringify(err),
+            })
+          });
+    });
+  }
+
   onFileSelect($event: any)
   {
       let node: TreeNode = $event.node;

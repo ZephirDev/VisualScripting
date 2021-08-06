@@ -157,4 +157,9 @@ export class VisualScriptingOpentracingComponent implements OnInit {
       return 'p-bottom-left';
     }
   }
+
+  isToolbarEnabled(): boolean
+  {
+    return this.opentracingService.getTracer() != null;
+  }
 }

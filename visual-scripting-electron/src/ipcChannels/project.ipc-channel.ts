@@ -8,6 +8,7 @@ import {
     VisualScriptingIpcChannelsEnum,
     VisualScriptingIpcChannelsMethodEnum,
     IpcDecorator, HandlerBuilder,
+    CreateNodeInterface, NodeInterface,
 } from './../common/public-api';
 import { AbstractFileInterface } from './../common/types/abstract-file.interface';
 import { RegularFileInterface } from './../common/types/regular-file.interface';
@@ -31,6 +32,8 @@ export class ProjectIpcChannel extends IpcDecorator {
             HandlerBuilder.newMessageHandler(this.listNodesOf.bind(this)));
         this.addHandler(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_CREATE_DIRECTORY,
             HandlerBuilder.newMessageHandler(this.createNodesDirectory.bind(this)));
+        this.addHandler(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_CREATE_NODE,
+            HandlerBuilder.newMessageHandler(this.createNode.bind(this)));
     }
 
     async createProject(directory: DirectoryInterface|null): Promise<ProjectInterface>
@@ -63,5 +66,10 @@ export class ProjectIpcChannel extends IpcDecorator {
     async createNodesDirectory(createDirectory: CreateDirectoryInterface|null): Promise<DirectoryInterface>
     {
         return ProjectServiceInstance.createNodesDirectory(createDirectory!);
+    }
+
+    async createNode(createNode: CreateNodeInterface|null): Promise<NodeInterface>
+    {
+        return ProjectServiceInstance.createNode(createNode!);
     }
 }

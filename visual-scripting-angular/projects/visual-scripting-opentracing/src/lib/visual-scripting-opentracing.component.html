@@ -1,4 +1,4 @@
-<p-dialog [visible]="isToolbarDisplayed()" [closable]="false" class="no-header-p-dialog-flex">
+<p-dialog *ngIf="isToolbarEnabled()" [visible]="isToolbarDisplayed()" [closable]="false" class="no-header-p-dialog-flex">
   <ng-template pTemplate="header">
     <p-toolbar>
       <div class="p-toolbar-group-left">
@@ -50,4 +50,4 @@
   </p-accordion>
 </p-dialog>
 
-<p-button [styleClass]="'visual-scripting-opentracing-toolbar ' + dynamicToolbarButtonClass()" *ngIf="!isToolbarDisplayed()" icon="pi pi-angle-up" (onClick)="setToolbarDisplay(true)" label="Toolbar"></p-button>
+<p-button [styleClass]="'visual-scripting-opentracing-toolbar ' + dynamicToolbarButtonClass()" *ngIf="isToolbarEnabled() && !isToolbarDisplayed()" icon="pi pi-angle-up" (onClick)="setToolbarDisplay(true)" label="Toolbar"></p-button>

@@ -1,5 +1,7 @@
 import {HandlerInterface} from "../types/handler.interface";
 import {ExecutionContext} from "../executions/execution.context";
+import {ErrorBuilder} from "./error.builder";
+import {VisualScriptingIpcRaiseByEnum} from "../enums/visual-scripting-ipc-raise-by.enum";
 
 export class HandlerBuilder {
 
@@ -15,7 +17,15 @@ export class HandlerBuilder {
                     let r = await fn(context.getMessage<ParameterType>().parameters || null);
                     context.addResult<ResultType>(r);
                 } catch (exception) {
-                    context.addError(exception);
+                    if (exception.what) {
+                        context.addError(exception);
+                    } else {
+                        context.addError(ErrorBuilder.For(VisualScriptingIpcRaiseByEnum.COMMON)
+                            .build({
+                                code: 0,
+                                what: exception.toString(),
+                            }));
+                    }
                 }
             }
         }
