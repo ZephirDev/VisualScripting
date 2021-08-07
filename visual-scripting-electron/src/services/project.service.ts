@@ -5,6 +5,7 @@ import {
     AbstractFileInterface,
     CreateDirectoryInterface,
     DirectoryInterface,
+    ErrorBuilder,
     ErrorInterface,
     FileTypeEnum,
     ProjectInterface,
@@ -161,6 +162,21 @@ export class ProjectService {
         fs.writeFileSync(path, JSON.stringify(nodeInterface, null, 4));
         nodeInterface.file = FileSystemServiceInstance.getRegularFileInterfaceOf(path)!;
         return nodeInterface;
+    }
+
+    async loadNode(file: RegularFileInterface): Promise<NodeInterface>
+    {
+        if (!fs.existsSync(file.path)) {
+            throw ErrorBuilder.For(VisualScriptingIpcRaiseByEnum.ELECTRON)
+                .addAnnotations({
+                    path: file.path,
+                })
+                .build(VisualScriptingIpcErrorEnum.VisualScriptingIpcFileNotExists);
+        }
+
+        let node = JSON.parse(fs.readFileSync(file.path, 'utf-8')) as NodeInterface;
+        node.file = file;
+        return node;
     }
 
     getProject(): ProjectInterface

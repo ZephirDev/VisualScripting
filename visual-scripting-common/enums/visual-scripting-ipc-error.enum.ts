@@ -63,4 +63,8 @@ export const VisualScriptingIpcErrorEnum = {
         code: 500_016,
         what: "Invalid number value",
     },
+    VisualScriptingIpcFileNotExists: {
+        code: 500_017,
+        what: "The file doesn't exist.",
+    },
 }

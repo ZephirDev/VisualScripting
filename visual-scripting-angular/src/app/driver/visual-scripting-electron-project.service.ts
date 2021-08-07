@@ -64,4 +64,11 @@ export class VisualScriptingElectronProjectService implements VisualScriptingEdi
       notNull: true
     }).then(r => r!);
   }
+
+  loadNode(file: RegularFileInterface): Promise<NodeInterface>
+  {
+    return this.ipcDecorator.send<RegularFileInterface, NodeInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_LOAD_NODE, file, {
+      notNull: true
+    }).then(r => r!);
+  }
 }

@@ -6,4 +6,5 @@ export interface VisualScriptingEditorProjectInterface {
   listNodesOf(directories: DirectoryInterface[]): Promise<AbstractFileInterface[]>;
   createNodesDirectoryOf(directories: DirectoryInterface[], name: string): Promise<DirectoryInterface>;
   createNode(directories: DirectoryInterface[], name: string): Promise<NodeInterface>;
+  loadNode(file: RegularFileInterface): Promise<NodeInterface>;
 }

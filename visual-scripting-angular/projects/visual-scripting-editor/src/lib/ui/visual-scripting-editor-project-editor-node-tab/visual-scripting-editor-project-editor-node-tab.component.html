@@ -22,4 +22,24 @@
       </div>
     </div>
   </div>
+
+  <div class="flex-auto p-component" *ngIf="node != null">
+    <div class="d-vertical-flex h-100">
+      <div><p-tabMenu [model]="nodePanels"></p-tabMenu></div>
+
+      <div class="flex-auto p-1-em" *ngIf="isNodeEditionSelected()" style="background-color: black">
+        <p-accordion>
+          <p-accordionTab [header]="node.name">
+
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+
+      <div class="flex-auto" *ngIf="isNodePreviewSelected()" style="background-color: white">
+
+      </div>
+    </div>
+  </div>
+
+
 </div>

@@ -1,7 +1,7 @@
 import { VisualScriptingEditorDriverService } from './../../services/visual-scripting-editor-driver.service';
 import { Component, OnInit } from '@angular/core';
-import { TreeNode, MessageService } from 'primeng/api';
-import { FileTypeEnum, AbstractFileInterface, DirectoryInterface } from 'visual-scripting-common';
+import {TreeNode, MessageService, MenuItem} from 'primeng/api';
+import { FileTypeEnum, AbstractFileInterface, DirectoryInterface, NodeInterface, RegularFileInterface } from 'visual-scripting-common';
 import { DialogService } from 'primeng/dynamicdialog';
 import { VisualScriptingEditorDialogInputTextComponent } from '../visual-scripting-editor-dialog-input-text/visual-scripting-editor-dialog-input-text.component';
 import { VisualScriptingEditorUiService } from '../../services/visual-scripting-editor-ui.service';
@@ -15,6 +15,21 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
 
   selectedFile?: TreeNode;
   files: TreeNode[] = [];
+  private selectedNodePanel: string = 'edit';
+  nodePanels: MenuItem[] = [{
+    label: "Edit",
+    icon: "pi pi-pencil",
+    command: () => {
+      this.selectedNodePanel = 'edit';
+    }
+  }, {
+    label: "Preview",
+    icon: "pi pi-eye",
+    command: () => {
+      this.selectedNodePanel = 'preview';
+    }
+  }];
+  node: NodeInterface|null = null;
 
   constructor(
     private driverService: VisualScriptingEditorDriverService,
@@ -184,6 +199,7 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
               this.files.push(item);
             }
 
+            this.setNode(node);
             this.uiService.setLoading(false);
           })
           .catch(err => {
@@ -197,13 +213,50 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
     });
   }
 
+  loadNode(file: RegularFileInterface): void
+  {
+    this.uiService.setLoading(true);
+    this.driverService.getDriver().getProject().loadNode(file)
+        .then(node => {
+          this.setNode(node);
+        })
+        .catch(err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: "Loading node: " + file.name,
+            detail: JSON.stringify(err),
+          })
+        })
+        .finally(() => {
+          this.uiService.setLoading(false);
+        });
+  }
+
   onFileSelect($event: any)
   {
       let node: TreeNode = $event.node;
       let file: AbstractFileInterface = node.data.file;
       if (FileTypeEnum.DIRECTORY == file.type) {
-        console.log(JSON.stringify(node));
         this.listDirectory(node);
+      } else if (FileTypeEnum.REGULAR_FILE == file.type) {
+        if (file.name.endsWith('.node')) {
+          this.loadNode(file as RegularFileInterface);
+        }
       }
+  }
+
+  isNodeEditionSelected(): boolean
+  {
+    return 'edit' === this.selectedNodePanel;
+  }
+
+  isNodePreviewSelected(): boolean
+  {
+    return 'preview' === this.selectedNodePanel;
+  }
+
+  setNode(node: NodeInterface): void
+  {
+    this.node = node;
   }
 }

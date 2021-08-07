@@ -34,6 +34,8 @@ export class ProjectIpcChannel extends IpcDecorator {
             HandlerBuilder.newMessageHandler(this.createNodesDirectory.bind(this)));
         this.addHandler(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_CREATE_NODE,
             HandlerBuilder.newMessageHandler(this.createNode.bind(this)));
+        this.addHandler(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_LOAD_NODE,
+            HandlerBuilder.newMessageHandler(this.loadNode.bind(this)));
     }
 
     async createProject(directory: DirectoryInterface|null): Promise<ProjectInterface>
@@ -71,5 +73,10 @@ export class ProjectIpcChannel extends IpcDecorator {
     async createNode(createNode: CreateNodeInterface|null): Promise<NodeInterface>
     {
         return ProjectServiceInstance.createNode(createNode!);
+    }
+
+    async loadNode(file: RegularFileInterface|null): Promise<NodeInterface>
+    {
+        return ProjectServiceInstance.loadNode(file!);
     }
 }
