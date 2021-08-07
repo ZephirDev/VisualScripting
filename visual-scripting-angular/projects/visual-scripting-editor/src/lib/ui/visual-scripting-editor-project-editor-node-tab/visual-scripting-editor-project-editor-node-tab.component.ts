@@ -30,6 +30,7 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
     }
   }];
   node: NodeInterface|null = null;
+  languages: string[] = ['C++', 'JavaScript'];
 
   constructor(
     private driverService: VisualScriptingEditorDriverService,

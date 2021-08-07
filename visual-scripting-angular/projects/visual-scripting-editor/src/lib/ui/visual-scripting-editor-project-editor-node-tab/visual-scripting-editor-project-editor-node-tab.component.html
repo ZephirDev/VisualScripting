@@ -27,15 +27,40 @@
     <div class="d-vertical-flex h-100">
       <div><p-tabMenu [model]="nodePanels"></p-tabMenu></div>
 
-      <div class="flex-auto p-1-em" *ngIf="isNodeEditionSelected()" style="background-color: black">
+      <div class="flex-auto p-1-em" *ngIf="isNodeEditionSelected()">
         <p-accordion>
           <p-accordionTab [header]="node.name">
+            <table class="w-100">
+              <tr>
+                <td>node.name</td>
+                <td><input type="text" pInputText class="w-100" disabled="true" [(ngModel)]="node.name"></td>
+              </tr>
+              <tr>
+                <td>node.namespace</td>
+                <td><input type="text" pInputText class="w-100" disabled="true" [(ngModel)]="node.namespace"></td>
+              </tr>
+              <tr>
+                <td>node.languages</td>
+                <td class="m-b-0_25em-list">
+                  <div class="w-100" *ngFor="let language of languages">
+                    <p-checkbox name="nodeLanguage" [value]="language" [label]="language" [(ngModel)]="node.languages"></p-checkbox>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </p-accordionTab>
+
+          <p-accordionTab *ngFor="let attribute of node.attributes" [header]="node.name + '.' + attribute.name">
 
           </p-accordionTab>
         </p-accordion>
+
+        <div class="w-100 m-t-0_5-em">
+          <p-button icon="pi pi-plus" label="Add attribute" styleClass="w-100"></p-button>
+        </div>
       </div>
 
-      <div class="flex-auto" *ngIf="isNodePreviewSelected()" style="background-color: white">
+      <div class="flex-auto" *ngIf="isNodePreviewSelected()">
 
       </div>
     </div>

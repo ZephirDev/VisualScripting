@@ -60,6 +60,10 @@
   margin-right: 0.5em;
 }
 
+::ng-deep .m-t-0_5-em {
+  margin-top: 0.5em;
+}
+
 ::ng-deep .d-cell {
   display: table-cell;
 }
@@ -109,4 +113,7 @@ p-toast ::ng-deep .p-toast {
 
 ::ng-deep .p-1-em {
   padding: 1em;
+}
+::ng-deep .m-b-0_25em-list :not(:last-child) {
+  margin-bottom: 0.25em;
 }

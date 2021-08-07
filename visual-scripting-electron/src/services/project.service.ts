@@ -157,6 +157,8 @@ export class ProjectService {
                 return aggregator + "::" + item.name;
             }, ""),
             name: createNode.name,
+            languages: [],
+            attributes: [],
         }
 
         fs.writeFileSync(path, JSON.stringify(nodeInterface, null, 4));
