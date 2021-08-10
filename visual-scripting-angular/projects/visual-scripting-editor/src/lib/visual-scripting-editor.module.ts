@@ -33,6 +33,7 @@ import {RippleModule} from "primeng/ripple";
 import { VisualScriptingEditorProjectEditorNodeAttributeTabComponent } from './ui/visual-scripting-editor-project-editor-node-attribute-tab/visual-scripting-editor-project-editor-node-attribute-tab.component';
 import { VisualScriptingEditorInputGroupComponent } from './ui/visual-scripting-editor-input-group/visual-scripting-editor-input-group.component';
 import {VisualScriptingEditorDriverService} from "./services/visual-scripting-editor-driver.service";
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import {VisualScriptingEditorDriverService} from "./services/visual-scripting-ed
     TreeModule,
     DynamicDialogModule,
     RippleModule,
+    DropdownModule,
   ],
   exports: [
     VisualScriptingEditorComponent,

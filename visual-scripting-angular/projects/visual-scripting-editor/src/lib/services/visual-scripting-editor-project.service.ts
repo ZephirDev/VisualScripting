@@ -22,7 +22,7 @@ export class VisualScriptingEditorProjectService {
     };
     this.timer = timer(0, 30000);
     this.timer.subscribe(() => {
-      if (this.driverService.hasDriver()) {
+      if (!this.driverService.hasDriver()) {
         return;
       }
 

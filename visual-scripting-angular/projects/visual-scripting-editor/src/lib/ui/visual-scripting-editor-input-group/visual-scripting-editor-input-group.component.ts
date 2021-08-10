@@ -8,6 +8,9 @@ import {Component, Input, OnInit} from '@angular/core';
 export class VisualScriptingEditorInputGroupComponent implements OnInit {
 
   @Input()
+  type: 'string' | 'list' = 'string';
+
+  @Input()
   getter: () => string = () => {
     return "";
   };
@@ -19,6 +22,9 @@ export class VisualScriptingEditorInputGroupComponent implements OnInit {
   validate: (value: string) => boolean = () => {
     return true;
   };
+
+  @Input()
+  values: string[] = [];
 
   @Input()
   styleClass: string = '';
@@ -55,5 +61,15 @@ export class VisualScriptingEditorInputGroupComponent implements OnInit {
     this.setter(this.model);
     this.cache = this.model;
     this.edit = false;
+  }
+
+  getDropdownOptions(): {name: string, value: string}[]
+  {
+    return this.values.map(item => {
+      return {
+        name: item,
+        value: item,
+      }
+    })
   }
 }

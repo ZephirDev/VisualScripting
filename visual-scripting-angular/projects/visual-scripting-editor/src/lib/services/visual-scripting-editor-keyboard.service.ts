@@ -12,7 +12,6 @@ export class VisualScriptingEditorKeyboardService {
 
   handle(event: KeyboardEvent, press: boolean)
   {
-    console.log(event.keyCode, press);
     if (press) {
       this.keys[event.keyCode] = true;
     } else {

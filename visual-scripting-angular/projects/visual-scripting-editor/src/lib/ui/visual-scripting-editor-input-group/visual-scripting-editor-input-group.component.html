@@ -4,6 +4,7 @@
 </div>
 
 <div [class]="'p-inputgroup ' + styleClass" *ngIf="edit">
-    <input type="text" pInputText [(ngModel)]="model">
+    <input *ngIf="type === 'string'" type="text" pInputText [(ngModel)]="model">
+    <p-dropdown *ngIf="type === 'list'" [(ngModel)]="model" [options]="getDropdownOptions()" optionLabel="name" optionValue="value" class="w-100" styleClass="w-100"></p-dropdown>
     <button type="button" pButton pRipple icon="pi pi-check" [disabled]="!canFinish()" (click)="finishEditing()"></button>
 </div>

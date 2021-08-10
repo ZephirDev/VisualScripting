@@ -270,7 +270,7 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
   {
     this.node!.attributes.push({
       name: 'attribute' + (this.node!.attributes.length + 1).toString(),
-      type: 'int',
+      type: '::number',
       methods: {}
     })
   }

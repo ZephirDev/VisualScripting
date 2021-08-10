@@ -11,6 +11,11 @@
     <tr>
         <td>attribute.type</td>
         <td>
+            <visual-scripting-editor-input-group styleClass="w-100"
+                                                 type="list"
+                                                 [values]="getAvailableAttributeTypes()"
+                                                 [getter]="getAttributeType.bind(this)"
+                                                 [setter]="setAttributeType.bind(this)"></visual-scripting-editor-input-group>
         </td>
     </tr>
 </table>

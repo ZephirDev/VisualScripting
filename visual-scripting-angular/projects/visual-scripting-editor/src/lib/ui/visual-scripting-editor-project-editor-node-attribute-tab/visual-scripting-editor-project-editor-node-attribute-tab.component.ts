@@ -49,6 +49,16 @@ export class VisualScriptingEditorProjectEditorNodeAttributeTabComponent impleme
     return self;
   }
 
+  getAttributeType(): string
+  {
+    return this.nodeAttribute!.type;
+  }
+
+  setAttributeType(type: string): void
+  {
+    this.nodeAttribute!.type = type;
+  }
+
   getAvailableAttributeTypes(): string[]
   {
     return this.projectService.getIndex().types.map(type => `${type.namespace}::${type.name}`);
