@@ -1,4 +1,4 @@
-import { DirectoryInterface, ProjectInterface, RegularFileInterface, AbstractFileInterface, NodeInterface } from 'visual-scripting-common';
+import { DirectoryInterface, ProjectInterface, RegularFileInterface, AbstractFileInterface, NodeInterface, IndexInterface } from 'visual-scripting-common';
 export interface VisualScriptingEditorProjectInterface {
   create(directory: DirectoryInterface): Promise<ProjectInterface>;
   load(file: RegularFileInterface): Promise<ProjectInterface>;
@@ -7,4 +7,5 @@ export interface VisualScriptingEditorProjectInterface {
   createNodesDirectoryOf(directories: DirectoryInterface[], name: string): Promise<DirectoryInterface>;
   createNode(directories: DirectoryInterface[], name: string): Promise<NodeInterface>;
   loadNode(file: RegularFileInterface): Promise<NodeInterface>;
+  getIndex(): Promise<IndexInterface|null>;
 }

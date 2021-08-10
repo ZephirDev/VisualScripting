@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { VisualScriptingEditorDriverInterface } from '../interfaces/visual-scripting-editor-driver.interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class VisualScriptingEditorDriverService {
-
-  driver: VisualScriptingEditorDriverInterface | null;
+  private driver: VisualScriptingEditorDriverInterface | null;
 
   constructor() {
     this.driver = null;
@@ -18,6 +19,11 @@ export class VisualScriptingEditorDriverService {
   setDriver(driver: VisualScriptingEditorDriverInterface)
   {
     this.driver = driver;
+  }
+
+  hasDriver(): boolean
+  {
+    return this.driver != null;
   }
 
 }

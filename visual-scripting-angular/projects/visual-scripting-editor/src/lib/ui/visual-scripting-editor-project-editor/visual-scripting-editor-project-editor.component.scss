@@ -10,6 +10,6 @@
   margin: 0.25em;
 }
 
-.scroll-y {
+::ng-deep .scroll-y {
   overflow-y: scroll;
 }

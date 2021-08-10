@@ -29,6 +29,10 @@ import { VisualScriptingEditorFilesDialogComponent } from './ui/visual-scripting
 import { VisualScriptingEditorProjectEditorComponent } from './ui/visual-scripting-editor-project-editor/visual-scripting-editor-project-editor.component';
 import { VisualScriptingEditorProjectEditorNodeTabComponent } from './ui/visual-scripting-editor-project-editor-node-tab/visual-scripting-editor-project-editor-node-tab.component';
 import { VisualScriptingEditorDialogInputTextComponent } from './ui/visual-scripting-editor-dialog-input-text/visual-scripting-editor-dialog-input-text.component';
+import {RippleModule} from "primeng/ripple";
+import { VisualScriptingEditorProjectEditorNodeAttributeTabComponent } from './ui/visual-scripting-editor-project-editor-node-attribute-tab/visual-scripting-editor-project-editor-node-attribute-tab.component';
+import { VisualScriptingEditorInputGroupComponent } from './ui/visual-scripting-editor-input-group/visual-scripting-editor-input-group.component';
+import {VisualScriptingEditorDriverService} from "./services/visual-scripting-editor-driver.service";
 
 @NgModule({
   declarations: [
@@ -38,6 +42,8 @@ import { VisualScriptingEditorDialogInputTextComponent } from './ui/visual-scrip
     VisualScriptingEditorProjectEditorComponent,
     VisualScriptingEditorProjectEditorNodeTabComponent,
     VisualScriptingEditorDialogInputTextComponent,
+    VisualScriptingEditorProjectEditorNodeAttributeTabComponent,
+    VisualScriptingEditorInputGroupComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +65,7 @@ import { VisualScriptingEditorDialogInputTextComponent } from './ui/visual-scrip
     TagModule,
     TreeModule,
     DynamicDialogModule,
+    RippleModule,
   ],
   exports: [
     VisualScriptingEditorComponent,
@@ -66,6 +73,7 @@ import { VisualScriptingEditorDialogInputTextComponent } from './ui/visual-scrip
   providers: [
     MessageService,
     DialogService,
+    VisualScriptingEditorDriverService,
   ],
 })
 export class VisualScriptingEditorModule { }

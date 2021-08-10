@@ -260,4 +260,21 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
   {
     this.node = node;
   }
+
+  hasNode(): boolean
+  {
+    return this.node != null;
+  }
+
+  createAttribute(): void
+  {
+    this.node!.attributes.push({
+      name: 'attribute' + (this.node!.attributes.length + 1).toString(),
+      type: 'int',
+      methods: {}
+    })
+  }
+
+  createMethod(): void
+  {}
 }

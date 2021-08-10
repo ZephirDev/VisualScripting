@@ -11,7 +11,7 @@ import { VisualScriptingEditorProjectService } from './services/visual-scripting
   styleUrls: [
     './visual-scripting-editor.component.scss',
   ],
-  providers: [VisualScriptingEditorDriverService]
+  providers: []
 })
 export class VisualScriptingEditorComponent implements OnInit {
 

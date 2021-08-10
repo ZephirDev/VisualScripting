@@ -9,7 +9,15 @@
   height: 100%;
 }
 
+::ng-deep .h-0 {
+  height: 0;
+}
+
 ::ng-deep .w-100 {
+  width: 100%;
+}
+
+::ng-deep .w-0 {
   width: 100%;
 }
 

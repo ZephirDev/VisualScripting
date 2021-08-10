@@ -11,6 +11,7 @@ import {
   CreateDirectoryInterface,
   NodeInterface,
   CreateNodeInterface,
+  IndexInterface,
 } from 'visual-scripting-common';
 import { VisualScriptingEditorProjectInterface } from 'visual-scripting-editor';
 import {VisualScriptingOpentracingService} from "visual-scripting-opentracing";
@@ -70,5 +71,12 @@ export class VisualScriptingElectronProjectService implements VisualScriptingEdi
     return this.ipcDecorator.send<RegularFileInterface, NodeInterface>(VisualScriptingIpcChannelsMethodEnum.PROJECT_NODES_LOAD_NODE, file, {
       notNull: true
     }).then(r => r!);
+  }
+
+  getIndex(): Promise<IndexInterface|null>
+  {
+    return this.ipcDecorator.send<null, IndexInterface|null>(VisualScriptingIpcChannelsMethodEnum.PROJECT_GET_INDEX, null, {
+      notNull: false
+    });
   }
 }

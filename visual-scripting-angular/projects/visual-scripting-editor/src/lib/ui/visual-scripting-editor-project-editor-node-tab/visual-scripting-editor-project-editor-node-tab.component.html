@@ -27,7 +27,7 @@
     <div class="d-vertical-flex h-100">
       <div><p-tabMenu [model]="nodePanels"></p-tabMenu></div>
 
-      <div class="flex-auto p-1-em" *ngIf="isNodeEditionSelected()">
+      <div class="flex-auto p-1-em h-0 scroll-y" *ngIf="isNodeEditionSelected()">
         <p-accordion>
           <p-accordionTab [header]="node.name">
             <table class="w-100">
@@ -51,13 +51,16 @@
           </p-accordionTab>
 
           <p-accordionTab *ngFor="let attribute of node.attributes" [header]="node.name + '.' + attribute.name">
-
+            <visual-scripting-editor-project-editor-node-attribute-tab [nodeAttribute]="attribute" [nodeAttributes]="node.attributes"></visual-scripting-editor-project-editor-node-attribute-tab>
           </p-accordionTab>
         </p-accordion>
 
-        <div class="w-100 m-t-0_5-em">
-          <p-button icon="pi pi-plus" label="Add attribute" styleClass="w-100"></p-button>
-        </div>
+        <table class="w-100 m-t-0_5-em">
+          <tr>
+            <td><p-button icon="pi pi-plus" label="Add attribute" styleClass="w-100" (onClick)="createAttribute()"></p-button></td>
+            <td><p-button icon="pi pi-plus" label="Add method" styleClass="w-100" (onClick)="createMethod()"></p-button></td>
+          </tr>
+        </table>
       </div>
 
       <div class="flex-auto" *ngIf="isNodePreviewSelected()">

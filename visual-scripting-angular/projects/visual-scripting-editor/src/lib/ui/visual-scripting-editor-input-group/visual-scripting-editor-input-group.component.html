@@ -1,0 +1,9 @@
+<div [class]="'p-inputgroup ' + styleClass" *ngIf="!edit">
+    <input type="text" pInputText disabled="true" [(ngModel)]="cache">
+    <button type="button" pButton pRipple icon="pi pi-pencil" (click)="startEditing()"></button>
+</div>
+
+<div [class]="'p-inputgroup ' + styleClass" *ngIf="edit">
+    <input type="text" pInputText [(ngModel)]="model">
+    <button type="button" pButton pRipple icon="pi pi-check" [disabled]="!canFinish()" (click)="finishEditing()"></button>
+</div>

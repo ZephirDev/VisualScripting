@@ -21,6 +21,7 @@ export * from './types/create-node.interface';
 export * from './types/node.interface';
 export * from './types/node-attribute.interface';
 export * from './types/node-method.interface';
+export * from './types/index.interface';
 
 export * from './enums/visual-scripting-ipc-channels-method.enum';
 export * from './enums/visual-scripting-ipc-channels.enum';
