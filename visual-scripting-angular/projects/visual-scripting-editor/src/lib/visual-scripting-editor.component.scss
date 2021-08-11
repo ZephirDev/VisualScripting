@@ -110,6 +110,14 @@
   margin-left: 0.2em;
 }
 
+::ng-deep .m-r-1-em {
+  margin-right: 1em;
+}
+
+::ng-deep .m-b-0_5em {
+  margin-bottom: 0.5em;
+}
+
 p-toast ::ng-deep .p-toast {
   z-index: 1000000;
 }
