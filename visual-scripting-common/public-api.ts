@@ -31,6 +31,7 @@ export * from './enums/visual-scripting-ipc-raise-by.enum';
 export * from './enums/events.enum';
 export * from './enums/priority-events.enum';
 export * from './enums/promise-status.enum';
+export * from './enums/visibility.enum';
 
 export * from './decorators/opentracing-tracer-decorator.interface';
 export * from './decorators/zipkin-tracer.decorator';

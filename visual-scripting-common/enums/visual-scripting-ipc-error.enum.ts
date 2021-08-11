@@ -67,4 +67,8 @@ export const VisualScriptingIpcErrorEnum = {
         code: 500_017,
         what: "The file doesn't exist.",
     },
+    VisualScriptingIpcNodeNameInvalid: {
+        code: 500_018,
+        what: "The node name is invalid because it's a keyword.",
+    },
 }

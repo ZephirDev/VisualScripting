@@ -1,7 +1,7 @@
 import { VisualScriptingEditorDriverService } from './../../services/visual-scripting-editor-driver.service';
 import { Component, OnInit } from '@angular/core';
 import {TreeNode, MessageService, MenuItem} from 'primeng/api';
-import { FileTypeEnum, AbstractFileInterface, DirectoryInterface, NodeInterface, RegularFileInterface } from 'visual-scripting-common';
+import { FileTypeEnum, AbstractFileInterface, DirectoryInterface, NodeInterface, RegularFileInterface, VisibilityEnum } from 'visual-scripting-common';
 import { DialogService } from 'primeng/dynamicdialog';
 import { VisualScriptingEditorDialogInputTextComponent } from '../visual-scripting-editor-dialog-input-text/visual-scripting-editor-dialog-input-text.component';
 import { VisualScriptingEditorUiService } from '../../services/visual-scripting-editor-ui.service';
@@ -271,6 +271,7 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
     this.node!.attributes.push({
       name: 'attribute' + (this.node!.attributes.length + 1).toString(),
       type: '::number',
+      visibility: VisibilityEnum.PUBLIC,
       methods: {}
     })
   }

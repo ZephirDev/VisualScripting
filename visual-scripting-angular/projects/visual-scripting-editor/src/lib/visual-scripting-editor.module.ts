@@ -34,6 +34,7 @@ import { VisualScriptingEditorProjectEditorNodeAttributeTabComponent } from './u
 import { VisualScriptingEditorInputGroupComponent } from './ui/visual-scripting-editor-input-group/visual-scripting-editor-input-group.component';
 import {VisualScriptingEditorDriverService} from "./services/visual-scripting-editor-driver.service";
 import {DropdownModule} from "primeng/dropdown";
+import {RadioButtonModule} from "primeng/radiobutton";
 
 @NgModule({
   declarations: [
@@ -46,29 +47,30 @@ import {DropdownModule} from "primeng/dropdown";
     VisualScriptingEditorProjectEditorNodeAttributeTabComponent,
     VisualScriptingEditorInputGroupComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MenuModule,
-    ButtonModule,
-    CardModule,
-    DataViewModule,
-    BreadcrumbModule,
-    TableModule,
-    ToastModule,
-    ToolbarModule,
-    TabMenuModule,
-    AccordionModule,
-    InputTextModule,
-    InputNumberModule,
-    CheckboxModule,
-    TagModule,
-    TreeModule,
-    DynamicDialogModule,
-    RippleModule,
-    DropdownModule,
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MenuModule,
+        ButtonModule,
+        CardModule,
+        DataViewModule,
+        BreadcrumbModule,
+        TableModule,
+        ToastModule,
+        ToolbarModule,
+        TabMenuModule,
+        AccordionModule,
+        InputTextModule,
+        InputNumberModule,
+        CheckboxModule,
+        TagModule,
+        TreeModule,
+        DynamicDialogModule,
+        RippleModule,
+        DropdownModule,
+        RadioButtonModule,
+    ],
   exports: [
     VisualScriptingEditorComponent,
   ],

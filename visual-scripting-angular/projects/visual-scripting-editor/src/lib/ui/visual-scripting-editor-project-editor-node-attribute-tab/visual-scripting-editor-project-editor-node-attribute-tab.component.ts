@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { NodeInterface, NodeAttributeInterface } from 'visual-scripting-common';
+import {NodeAttributeInterface, VisibilityEnum} from 'visual-scripting-common';
 import {VisualScriptingEditorProjectService} from "../../services/visual-scripting-editor-project.service";
 
 @Component({
@@ -13,7 +13,12 @@ export class VisualScriptingEditorProjectEditorNodeAttributeTabComponent impleme
   nodeAttributes: NodeAttributeInterface[] = [];
 
   @Input()
-  nodeAttribute: NodeAttributeInterface|null = null;
+  nodeAttribute: NodeAttributeInterface = {
+    name: '',
+    type: '',
+    visibility: VisibilityEnum.PRIVATE,
+    methods: {},
+  };
 
   constructor(
       private projectService: VisualScriptingEditorProjectService
@@ -25,12 +30,12 @@ export class VisualScriptingEditorProjectEditorNodeAttributeTabComponent impleme
 
   getAttributeName(): string
   {
-    return this.nodeAttribute!.name;
+    return this.nodeAttribute.name;
   }
 
   setAttributeName(name: string): void
   {
-    this.nodeAttribute!.name = name;
+    this.nodeAttribute.name = name;
   }
 
   validateAttributeName(name: string): boolean
@@ -51,12 +56,12 @@ export class VisualScriptingEditorProjectEditorNodeAttributeTabComponent impleme
 
   getAttributeType(): string
   {
-    return this.nodeAttribute!.type;
+    return this.nodeAttribute.type;
   }
 
   setAttributeType(type: string): void
   {
-    this.nodeAttribute!.type = type;
+    this.nodeAttribute.type = type;
   }
 
   getAvailableAttributeTypes(): string[]

@@ -125,6 +125,17 @@ export class ProjectService {
         return FileSystemServiceInstance.mkdir([this.getNodesFolder()!].concat(createDirectory.directories), createDirectory.name);
     }
 
+    private guardNode(node: NodeInterface)
+    {
+        if (['string', 'number', 'boolean'].includes(node.name)) {
+            throw ErrorBuilder.For(VisualScriptingIpcRaiseByEnum.ANGULAR)
+                .addAnnotations({
+                    node
+                })
+                .build(VisualScriptingIpcErrorEnum.VisualScriptingIpcNodeNameInvalid);
+        }
+    }
+
     async createNode(createNode: CreateNodeInterface): Promise<NodeInterface>
     {
         this.createNodesFolder();
@@ -161,6 +172,7 @@ export class ProjectService {
             attributes: [],
         }
 
+        this.guardNode(nodeInterface);
         fs.writeFileSync(path, JSON.stringify(nodeInterface, null, 4));
         nodeInterface.file = FileSystemServiceInstance.getRegularFileInterfaceOf(path)!;
         return nodeInterface;

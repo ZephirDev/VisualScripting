@@ -1,5 +1,13 @@
 <table class="w-100 m-t-0_5-em">
     <tr>
+        <td>attribute.visibility</td>
+        <td>
+            <p-radioButton name="nodeAttributeVisibility" value="private" [(ngModel)]="nodeAttribute.visibility"></p-radioButton>
+            <p-radioButton name="nodeAttributeVisibility" value="protected" [(ngModel)]="nodeAttribute.visibility"></p-radioButton>
+            <p-radioButton name="nodeAttributeVisibility" value="public" [(ngModel)]="nodeAttribute.visibility"></p-radioButton>
+        </td>
+    </tr>
+    <tr>
         <td>attribute.name</td>
         <td>
             <visual-scripting-editor-input-group styleClass="w-100"
