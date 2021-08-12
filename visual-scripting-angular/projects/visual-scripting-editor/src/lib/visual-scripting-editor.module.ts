@@ -35,6 +35,7 @@ import { VisualScriptingEditorInputGroupComponent } from './ui/visual-scripting-
 import {VisualScriptingEditorDriverService} from "./services/visual-scripting-editor-driver.service";
 import {DropdownModule} from "primeng/dropdown";
 import {RadioButtonModule} from "primeng/radiobutton";
+import { VisualScriptingEditorFabricComponent } from './ui/visual-scripting-editor-fabric/visual-scripting-editor-fabric.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {RadioButtonModule} from "primeng/radiobutton";
     VisualScriptingEditorDialogInputTextComponent,
     VisualScriptingEditorProjectEditorNodeAttributeTabComponent,
     VisualScriptingEditorInputGroupComponent,
+    VisualScriptingEditorFabricComponent,
   ],
     imports: [
         BrowserModule,

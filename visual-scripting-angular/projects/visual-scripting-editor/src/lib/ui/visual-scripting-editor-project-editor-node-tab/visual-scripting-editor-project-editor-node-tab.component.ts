@@ -5,6 +5,7 @@ import { FileTypeEnum, AbstractFileInterface, DirectoryInterface, NodeInterface,
 import { DialogService } from 'primeng/dynamicdialog';
 import { VisualScriptingEditorDialogInputTextComponent } from '../visual-scripting-editor-dialog-input-text/visual-scripting-editor-dialog-input-text.component';
 import { VisualScriptingEditorUiService } from '../../services/visual-scripting-editor-ui.service';
+import {FabricControlInterface} from "../../interfaces/fabric-control.interface";
 
 @Component({
   selector: 'visual-scripting-editor-project-editor-node-tab',
@@ -31,6 +32,7 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
   }];
   node: NodeInterface|null = null;
   languages: string[] = ['C++', 'JavaScript'];
+  nodeControl: FabricControlInterface;
 
   constructor(
     private driverService: VisualScriptingEditorDriverService,
@@ -38,7 +40,13 @@ export class VisualScriptingEditorProjectEditorNodeTabComponent implements OnIni
     private dynamicDialogService: DialogService,
     private uiService: VisualScriptingEditorUiService,
   )
-  {}
+  {
+    this.nodeControl = {
+      init: () => {
+
+      },
+    }
+  }
 
   ngOnInit()
   {
