@@ -34,19 +34,22 @@ export class VisualScriptingEditorFabricComponent implements OnInit {
 
   ngOnInit(): void
   {
-    this.fabricCanvas = new fabric.Canvas(this.canvas!.nativeElement);
+    this.fabricCanvas = new fabric.Canvas(this.canvas!.nativeElement, {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
     this.fabricCanvas.backgroundColor = '#AAAAEE';
     let circle = new fabric.Circle({
       radius: 20, fill: 'green', left: 100, top: 100
     });
     this.fabricCanvas.add(circle);
     this.fabricCanvas.renderAll();
+  }
 
-    const observer = new ResizeObserver(entries => {
-      this.fabricCanvas!.setWidth(entries[0].contentRect.width);
-      this.fabricCanvas!.setHeight(entries[0].contentRect.height);
-    });
-    observer.observe(this.container!.nativeElement);
+  resize()
+  {
+    this.fabricCanvas!.setWidth(window.innerWidth);
+    this.fabricCanvas!.setHeight(window.innerHeight);
   }
 
 }
